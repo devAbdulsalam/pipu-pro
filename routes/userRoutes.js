@@ -1,46 +1,44 @@
 import express from 'express';
-import User from '../models/User.js';
-import { signinUser } from '../controllers/user.js';
-import avatarRoutes from './avatarRoutes.js';
+import {
+	signinUser,
+	loginUser,
+	getAllUsers,
+	getUserById,
+	assignRole,
+	updateProfile,
+	logOutUser,
+	refreshAccessToken,
+	forgotPassword,
+	resetPassword,
+	getCurrentUser,
+	deleteUser,
+	updateAvatar,
+} from '../controllers/user.js';
+import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
+import { upload } from '../middleware/multer.js';
 
 const router = express.Router();
 
 // //new user
+router.get('/', getAllUsers);
+router.get('/current-user', requireAuth, getCurrentUser);
+router.get('/:id', getUserById);
 router.post('/register', signinUser);
-router.use('/avatar', avatarRoutes);
-
-// Create a new user
-router.post('/', async (req, res) => {
-	try {
-		const user = new User(req.body);
-		await user.save();
-		res.status(201).send(user);
-	} catch (err) {
-		res.status(400).send(err.message);
-	}
-});
-
-// Get all users
-router.get('/', async (req, res) => {
-	try {
-		const users = await User.find();
-		res.send(users);
-	} catch (err) {
-		res.status(500).send(err.message);
-	}
-});
-
-// Get user by ID
-router.get('/:id', async (req, res) => {
-	try {
-		const user = await User.findById(req.params.id);
-		if (!user) {
-			return res.status(404).send('User not found');
-		}
-		res.send(user);
-	} catch (err) {
-		res.status(500).send(err.message);
-	}
-});
+router.post('/login', loginUser);
+router.post('/logout', requireAuth, logOutUser);
+router.post('/refresh-token', requireAuth, refreshAccessToken);
+router.post(
+	'/assign-role/:userId',
+	requireAuth,
+	verifyPermission(['ADMIN']),
+	assignRole
+);
+router.post('/forgot-password', forgotPassword);
+router.post('/reset-password', resetPassword);
+// router.post('/verify-email', verifyEmail);
+// router.post('/verify-otp', verifyOtp);
+router.patch('/avatar', requireAuth, upload.single('avatar'), updateAvatar);
+router.patch('/profile', requireAuth, upload.single('avatar'), updateProfile);
+router.delete('/delete-account', requireAuth, requireAuth, deleteUser);
 
 export default router;
