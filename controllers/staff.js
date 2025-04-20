@@ -1,5 +1,12 @@
 import Ticket from '../models/Ticket.js';
 import Visitor from '../models/Visitor.js';
+import Task from '../models/Task.js';
+import BoardRoom from '../models/BoardRoom.js';
+import Meeting from '../models/Meeting.js';
+import Leave from '../models/Leave.js';
+import Complaint from '../models/Complaint.js';
+import Customer from '../models/Customer.js';
+import Chat from '../models/Chat.js';
 import VisitorLog from '../models/VisitorLog.js';
 import { generateUniqueCode } from '../utils/generateUniqueCode.js';
 
