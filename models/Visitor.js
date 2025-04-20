@@ -3,7 +3,11 @@ import mongoose, { Schema } from 'mongoose';
 
 const VisitorSchema = new Schema(
 	{
-		organizationId: { type: String, required: true },
+		ownerId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+			required: true,
+		},
 		name: { type: String, required: true },
 		email: { type: String },
 		phone: { type: String },

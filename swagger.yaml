@@ -1669,7 +1669,7 @@ paths:
   /users:
     get:
       tags:
-        - 👨‍💼 Admin
+        - 👨‍💼 Pipopro Admin
       summary: Get users
       description: >-
         The API endpoint retrieves a list of users. When accessing this
@@ -1844,6 +1844,126 @@ paths:
                       totalPages: 50
                     message: user fetched successfully
                     success: true
+  /company/dashboard:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company dashboard
+      description: >-
+        The API endpoint allows you to retrieve the company dashboard
+      operationId: getCompanyDashboard
+      responses:
+        '200':
+          description: Get company dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /staff/dashboard:
+    get:
+      tags:
+        - 👨‍👩‍👧‍👦 Staff
+      summary: Get staff dashboard
+      description: >-
+        The API endpoint allows you to retrieve the staff dashboard
+      operationId: getStaffDashboard
+      responses:
+        '200':
+          description: Get staff dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
   /guest/visitor/registration:
     post:
       tags:
@@ -2004,13 +2124,13 @@ paths:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get guest admin dashboard
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the guest admin dashboard
+      operationId: getGuestAdminDashboard
       responses:
         '200':
-          description: Get dashboard
+          description: Get guest admin dashboard
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2064,13 +2184,13 @@ paths:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get guest admin staff
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the guest admin to fetch their staff
+      operationId: getGuestAdminStaff
       responses:
         '200':
-          description: Get dashboard
+          description: Get guest admin to fetch their staff
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2124,13 +2244,13 @@ paths:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get guest staff dashboard
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the  guest staff to fetch their dashboard
+      operationId: getGuestStaffDashboard
       responses:
         '200':
-          description: Get dashboard
+          description: Get  guest staff dashboard
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2184,13 +2304,13 @@ paths:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get guest host fetch their dashboard
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the  guest host fetch their dashboard
+      operationId: getGuestHostDashboard
       responses:
         '200':
-          description: Get dashboard
+          description: Get  guest host fetch their dashboard
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2244,13 +2364,13 @@ paths:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get visitors
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the visitors
+      operationId: getGuestVisitor
       responses:
         '200':
-          description: Get dashboard
+          description: Get the visitors
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2300,17 +2420,116 @@ paths:
             application/json:
               schema:
                 type: object
-  /guest/visitors/dashboard:
+    post:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Register guest visitor
+      description: >-
+        The API endpoint allows guest to register visitor and generate pass code.
+      operationId: registerGuestVisitor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: john
+                phone:
+                  type: string
+                  example: '+234568908798'
+                email:
+                  type: string
+                  example: abc@gmail.com
+                maxTime:
+                  type: number
+                  example: 200000000
+                entryType:
+                  type: string
+                  enum: ['infinity', 'single', 'multiple']
+                  example: infinity
+                  description: infinity, single, multiple
+                expirationTime:
+                  type: string
+                  example: '2025-07-28T06:42:26.247Z'
+                  # example: Fri, 30 Jun 2025 06:44:09 GMT
+                  description: '2025-06-30T06:42:26.247Z'
+      responses:
+        '201':
+          description: Register GuestVisitor
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Visitor registered successfully.
+  /guest/visitors/code/:code:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get visitor by pass code
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the  visitor by pass code
+      operationId: getVisitorByPassCode
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: The pass code of the
       responses:
         '200':
-          description: Get dashboard
+          description: Get  visitor by pass code
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2360,17 +2579,17 @@ paths:
             application/json:
               schema:
                 type: object
-  /guest/visitors/:
+  /guest/visitors/companyId:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get visitor by companyId
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the visitor by companyId
+      operationId: getvisitor by companyId
       responses:
         '200':
-          description: Get dashboard
+          description: Get visitor by companyId
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2424,13 +2643,13 @@ paths:
     get:
       tags:
         - 👩🏻‍🏫 Guest
-      summary: Get dashboard
+      summary: Get visitor by Id
       description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
+        The API endpoint allows you to retrieve the visitor by Id
+      operationId: getvisitor by Id
       responses:
         '200':
-          description: Get dashboard
+          description: Get visitor by Id
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -2480,378 +2699,6 @@ paths:
             application/json:
               schema:
                 type: object
-  /guest/:
-    get:
-      tags:
-        - 👩🏻‍🏫 Guest
-      summary: Get dashboard
-      description: >-
-        The API endpoint allows you to retrieve the pipupro dashboard
-      operationId: getPipuproDashboard
-      responses:
-        '200':
-          description: Get dashboard
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '443'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:47 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '493'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '631'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-  /guest/visitor:
-    post:
-      tags:
-        - 🔐 Authentication
-      summary: Register guest
-      description: >-
-        The API endpoint allows users to register or signup to create their
-        accounts.
-      operationId: registerGuest
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstname:
-                  type: string
-                  example: john
-                lastname:
-                  type: string
-                  example: david
-                email:
-                  type: string
-                  example: abc@gmail.com
-                password:
-                  type: string
-                  example: test@123
-            example:
-              firdtname: 'john'
-              lastname: 'david'
-              email: abc@gmail.com
-              password: test@123
-      responses:
-        '201':
-          description: Register user
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '500'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:09 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '495'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '772'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user:
-                    type: object
-                    properties:
-                      __v:
-                        type: number
-                        example: 0
-                      _id:
-                        type: string
-                        example: 649e795264e7dba29b726936
-                      avatar:
-                        type: object
-                        properties:
-                          _id:
-                            type: string
-                            example: 649e795264e7dba29b726935
-                          url:
-                            type: string
-                            example: https://via.placeholder.com/200x200.png
-                      createdAt:
-                        type: string
-                        example: '2023-06-30T06:42:26.163Z'
-                      email:
-                        type: string
-                        example: user.email@domain.com
-                      name:
-                        type: string
-                        example: john
-                      phone:
-                        type: string
-                        example: '+23491234567'
-                      isVerified:
-                        type: boolean
-                        example: false
-                      loginType:
-                        type: string
-                        example: EMAIL_PASSWORD
-                      role:
-                        type: string
-                        example: ADMIN
-                      updatedAt:
-                        type: string
-                        example: '2023-06-30T06:42:26.247Z'
-                  message:
-                    type: string
-                    example: >-
-                      Users registered successfully and verification email has
-                      been sent on your email.
-                  success:
-                    type: boolean
-                    example: true
-              examples:
-                Register user:
-                  value:
-                    user:
-                      __v: 0
-                      _id: 649e795264e7dba29b726936
-                      avatar:
-                        publid_id: 649e795264e7dba29b726935
-                        url: https://via.placeholder.com/200x200.png
-                      createdAt: '2023-06-30T06:42:26.163Z'
-                      phone: '+2345600909'
-                      email: user.email@domain.com
-                      name: doejohn
-                      isVerified: false
-                      loginType: EMAIL_PASSWORD
-                      role: User
-                      updatedAt: '2023-06-30T06:42:26.247Z'
-                    message: >-
-                      Users registered successfully and verification email has
-                      been sent on your email.
-                    success: true
-  /guest/visitor/registation:
-    post:
-      tags:
-        - 🔐 Authentication
-      summary: Register guest
-      description: >-
-        The API endpoint allows users to register or signup to create their
-        accounts.
-      operationId: registerGuest
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstname:
-                  type: string
-                  example: john
-                lastname:
-                  type: string
-                  example: david
-                email:
-                  type: string
-                  example: abc@gmail.com
-                password:
-                  type: string
-                  example: test@123
-            example:
-              firdtname: 'john'
-              lastname: 'david'
-              email: abc@gmail.com
-              password: test@123
-      responses:
-        '201':
-          description: Register user
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '500'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:09 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '495'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '772'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user:
-                    type: object
-                    properties:
-                      __v:
-                        type: number
-                        example: 0
-                      _id:
-                        type: string
-                        example: 649e795264e7dba29b726936
-                      avatar:
-                        type: object
-                        properties:
-                          _id:
-                            type: string
-                            example: 649e795264e7dba29b726935
-                          url:
-                            type: string
-                            example: https://via.placeholder.com/200x200.png
-                      createdAt:
-                        type: string
-                        example: '2023-06-30T06:42:26.163Z'
-                      email:
-                        type: string
-                        example: user.email@domain.com
-                      name:
-                        type: string
-                        example: john
-                      phone:
-                        type: string
-                        example: '+23491234567'
-                      isVerified:
-                        type: boolean
-                        example: false
-                      loginType:
-                        type: string
-                        example: EMAIL_PASSWORD
-                      role:
-                        type: string
-                        example: ADMIN
-                      updatedAt:
-                        type: string
-                        example: '2023-06-30T06:42:26.247Z'
-                  message:
-                    type: string
-                    example: >-
-                      Users registered successfully and verification email has
-                      been sent on your email.
-                  success:
-                    type: boolean
-                    example: true
-              examples:
-                Register user:
-                  value:
-                    user:
-                      __v: 0
-                      _id: 649e795264e7dba29b726936
-                      avatar:
-                        publid_id: 649e795264e7dba29b726935
-                        url: https://via.placeholder.com/200x200.png
-                      createdAt: '2023-06-30T06:42:26.163Z'
-                      phone: '+2345600909'
-                      email: user.email@domain.com
-                      name: doejohn
-                      isVerified: false
-                      loginType: EMAIL_PASSWORD
-                      role: User
-                      updatedAt: '2023-06-30T06:42:26.247Z'
-                    message: >-
-                      Users registered successfully and verification email has
-                      been sent on your email.
-                    success: true
   /admin:
     get:
       tags:
@@ -3305,14 +3152,10 @@ paths:
                     type: string
                     example: >-
                       Update successfull.
-
 tags:
   - name: 🔐 Authentication
     description: >-
       This section encompasses all the APIs related to user authentication.
-  - name: 👨‍💼 Individual
-    description: >-
-      This section encompasses all other APIs related to individual.
   - name: 🏫 Company
     description: >-
       This section encompasses all other APIs related to company.

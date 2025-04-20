@@ -17,6 +17,8 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import guestRoutes from './routes/guestRoutes.js';
 import pipuproRoutes from './routes/pipuproRoutes.js';
+import companyRoutes from './routes/companyRoutes.js';
+import staffRoutes from './routes/staffRoutes.js';
 
 // setups
 const __filename = fileURLToPath(import.meta.url);
@@ -77,9 +79,11 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use('/api/v1/users', userRoutes);
-app.use('/api/v1/guest', guestRoutes);
 app.use('/api/v1/admin', pipuproRoutes);
+app.use('/api/v1/company', companyRoutes);
+app.use('/api/v1/guest', guestRoutes);
+app.use('/api/v1/staff', staffRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Basic route
 // * API DOCS

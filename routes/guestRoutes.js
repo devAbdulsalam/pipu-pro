@@ -40,9 +40,9 @@ router.get(
 	// verifyPermission(['ADMIN']),
 	getGuestStaffDashboard
 );
-router.post('/visitors/registration', requireAuth, createVisitor);
+router.post('/visitors', requireAuth, createVisitor);
 router.get('/visitors', requireAuth, verifyPermission(['ADMIN']), getVisitors);
-router.get('/visitors/:code', requireAuth, getVisitorByCode);
+router.get('/visitors/code/:code', requireAuth, getVisitorByCode);
 router.get('/visitors/:companyId', requireAuth, getVisitorsByCompanyId);
 router.get('/visitors/:id', requireAuth, getVisitorById);
 router.patch('/visitors/:code/check-in', requireAuth, visitorCheckIn);

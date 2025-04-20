@@ -1,11 +1,11 @@
 import express from 'express';
 import {
-	getAccounts,
-	getDashboard,
-	getFinances,
-	updateSubscriptionPrices,
-	createSubscriptionPlan,
-	getSubscriptionPrices,
+    getAccounts,
+    getDashboard,
+    getFinances,
+    updateSubscriptionPrices,
+    createSubscriptionPlan,
+    getSubscriptionPrices,
 } from '../controllers/pipupro.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
