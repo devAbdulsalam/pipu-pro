@@ -1844,7 +1844,7 @@ paths:
                       totalPages: 50
                     message: user fetched successfully
                     success: true
-  /guest/register:
+  /guest/visitor/registration:
     post:
       tags:
         - 🔐 Authentication
@@ -2000,6 +2000,1311 @@ paths:
                       Users registered successfully and verification email has
                       been sent on your email.
                     success: true
+  /guest/admin/dashboard:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/admin/staff:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/staff/dashboard:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/host/dashboard:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/visitors:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/visitors/dashboard:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/visitors/:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/visitors/id:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/:
+    get:
+      tags:
+        - 👩🏻‍🏫 Guest
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /guest/visitor:
+    post:
+      tags:
+        - 🔐 Authentication
+      summary: Register guest
+      description: >-
+        The API endpoint allows users to register or signup to create their
+        accounts.
+      operationId: registerGuest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstname:
+                  type: string
+                  example: john
+                lastname:
+                  type: string
+                  example: david
+                email:
+                  type: string
+                  example: abc@gmail.com
+                password:
+                  type: string
+                  example: test@123
+            example:
+              firdtname: 'john'
+              lastname: 'david'
+              email: abc@gmail.com
+              password: test@123
+      responses:
+        '201':
+          description: Register user
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      __v:
+                        type: number
+                        example: 0
+                      _id:
+                        type: string
+                        example: 649e795264e7dba29b726936
+                      avatar:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 649e795264e7dba29b726935
+                          url:
+                            type: string
+                            example: https://via.placeholder.com/200x200.png
+                      createdAt:
+                        type: string
+                        example: '2023-06-30T06:42:26.163Z'
+                      email:
+                        type: string
+                        example: user.email@domain.com
+                      name:
+                        type: string
+                        example: john
+                      phone:
+                        type: string
+                        example: '+23491234567'
+                      isVerified:
+                        type: boolean
+                        example: false
+                      loginType:
+                        type: string
+                        example: EMAIL_PASSWORD
+                      role:
+                        type: string
+                        example: ADMIN
+                      updatedAt:
+                        type: string
+                        example: '2023-06-30T06:42:26.247Z'
+                  message:
+                    type: string
+                    example: >-
+                      Users registered successfully and verification email has
+                      been sent on your email.
+                  success:
+                    type: boolean
+                    example: true
+              examples:
+                Register user:
+                  value:
+                    user:
+                      __v: 0
+                      _id: 649e795264e7dba29b726936
+                      avatar:
+                        publid_id: 649e795264e7dba29b726935
+                        url: https://via.placeholder.com/200x200.png
+                      createdAt: '2023-06-30T06:42:26.163Z'
+                      phone: '+2345600909'
+                      email: user.email@domain.com
+                      name: doejohn
+                      isVerified: false
+                      loginType: EMAIL_PASSWORD
+                      role: User
+                      updatedAt: '2023-06-30T06:42:26.247Z'
+                    message: >-
+                      Users registered successfully and verification email has
+                      been sent on your email.
+                    success: true
+  /guest/visitor/registation:
+    post:
+      tags:
+        - 🔐 Authentication
+      summary: Register guest
+      description: >-
+        The API endpoint allows users to register or signup to create their
+        accounts.
+      operationId: registerGuest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstname:
+                  type: string
+                  example: john
+                lastname:
+                  type: string
+                  example: david
+                email:
+                  type: string
+                  example: abc@gmail.com
+                password:
+                  type: string
+                  example: test@123
+            example:
+              firdtname: 'john'
+              lastname: 'david'
+              email: abc@gmail.com
+              password: test@123
+      responses:
+        '201':
+          description: Register user
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      __v:
+                        type: number
+                        example: 0
+                      _id:
+                        type: string
+                        example: 649e795264e7dba29b726936
+                      avatar:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 649e795264e7dba29b726935
+                          url:
+                            type: string
+                            example: https://via.placeholder.com/200x200.png
+                      createdAt:
+                        type: string
+                        example: '2023-06-30T06:42:26.163Z'
+                      email:
+                        type: string
+                        example: user.email@domain.com
+                      name:
+                        type: string
+                        example: john
+                      phone:
+                        type: string
+                        example: '+23491234567'
+                      isVerified:
+                        type: boolean
+                        example: false
+                      loginType:
+                        type: string
+                        example: EMAIL_PASSWORD
+                      role:
+                        type: string
+                        example: ADMIN
+                      updatedAt:
+                        type: string
+                        example: '2023-06-30T06:42:26.247Z'
+                  message:
+                    type: string
+                    example: >-
+                      Users registered successfully and verification email has
+                      been sent on your email.
+                  success:
+                    type: boolean
+                    example: true
+              examples:
+                Register user:
+                  value:
+                    user:
+                      __v: 0
+                      _id: 649e795264e7dba29b726936
+                      avatar:
+                        publid_id: 649e795264e7dba29b726935
+                        url: https://via.placeholder.com/200x200.png
+                      createdAt: '2023-06-30T06:42:26.163Z'
+                      phone: '+2345600909'
+                      email: user.email@domain.com
+                      name: doejohn
+                      isVerified: false
+                      loginType: EMAIL_PASSWORD
+                      role: User
+                      updatedAt: '2023-06-30T06:42:26.247Z'
+                    message: >-
+                      Users registered successfully and verification email has
+                      been sent on your email.
+                    success: true
+  /admin:
+    get:
+      tags:
+        - 👨‍💼 Pipopro Admin
+      summary: Get dashboard
+      description: >-
+        The API endpoint allows you to retrieve the pipupro dashboard
+      operationId: getPipuproDashboard
+      responses:
+        '200':
+          description: Get dashboard
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /admin/accounts:
+    get:
+      tags:
+        - 👨‍💼 Pipopro Admin
+      summary: Get Accounts
+      description: >-
+        The API endpoint allows you to retrieve the pipupro users Accounts
+      operationId: getAllUsersAccounts
+      responses:
+        '200':
+          description: Get Accounts
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /admin/finances:
+    get:
+      tags:
+        - 👨‍💼 Pipopro Admin
+      summary: Get finances
+      description: >-
+        The API endpoint allows you to retrieve the pipupro admin finances
+      operationId: getAllfinances
+      responses:
+        '200':
+          description: Get finances
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /admin/subscription-prices:
+    get:
+      tags:
+        - 👨‍💼 Pipopro Admin
+      summary: Get subscription plan prices
+      description: >-
+        The API endpoint allows you to retrieve the pipupro admin to get subscription plan prices
+      operationId: subscription-plan-prices
+      responses:
+        '200':
+          description: subscription plan prices
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /admin/subscription-plans:
+    post:
+      tags:
+        - 👨‍💼 Pipopro Admin
+      summary: create-subscription-plans
+      description: >-
+        The API endpoint allows admins to create subscription plans.
+      operationId: create-subscription-plans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: john
+                price:
+                  type: number
+                  example: 1000
+                description:
+                  type: string
+                  example: individual plan
+                features:
+                  type: string
+                  example: abc@gmail.com
+                duration:
+                  type: number
+                  example: 30
+                  description: duration in days
+      responses:
+        '201':
+          description: create-subscription-plans
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      __v:
+                        type: number
+                        example: 0
+                      _id:
+                        type: string
+                        example: 649e795264e7dba29b726936
+                      avatar:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 649e795264e7dba29b726935
+                          url:
+                            type: string
+                            example: https://via.placeholder.com/200x200.png
+                      createdAt:
+                        type: string
+                        example: '2023-06-30T06:42:26.163Z'
+                      email:
+                        type: string
+                        example: user.email@domain.com
+                      name:
+                        type: string
+                        example: john
+                      phone:
+                        type: string
+                        example: '+23491234567'
+                      isVerified:
+                        type: boolean
+                        example: false
+                      loginType:
+                        type: string
+                        example: EMAIL_PASSWORD
+                      role:
+                        type: string
+                        example: ADMIN
+                      updatedAt:
+                        type: string
+                        example: '2023-06-30T06:42:26.247Z'
+                  message:
+                    type: string
+                    example: >-
+                      new suscription plan created successfully.
+  /admin/update-subscription-prices:
+    patch:
+      tags:
+        - 👨‍💼 Pipopro Admin
+      summary: update subscription plan prices
+      description: >-
+        The API endpoint allows admins to update subscription plan prices.
+      operationId: update-subscription-prices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plans:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 680523ae6e97ead69d461bb3
+                      price:
+                        type: string
+                        example: 3000
+      responses:
+        '201':
+          description: update subscription plan prices
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Update successfull.
 
 tags:
   - name: 🔐 Authentication

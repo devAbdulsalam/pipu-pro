@@ -11,4 +11,5 @@ const ComplaintSchema = new Schema({
 	channel: { type: String },
 });
 
-export const Complaint = mongoose.model('Complaint', ComplaintSchema);
+const Complaint = mongoose.model('Complaint', ComplaintSchema);
+export default Complaint;

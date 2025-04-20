@@ -12,4 +12,5 @@ const leaveSchema = new Schema({
 	},
 });
 
-export const Leave = mongoose.model('Leave', leaveSchema);
+const Leave = mongoose.model('Leave', leaveSchema);
+export default Leave;

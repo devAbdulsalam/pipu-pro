@@ -15,6 +15,8 @@ import YAML from 'yaml';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
+import guestRoutes from './routes/guestRoutes.js';
+import pipuproRoutes from './routes/pipuproRoutes.js';
 
 // setups
 const __filename = fileURLToPath(import.meta.url);
@@ -76,6 +78,8 @@ connectDB();
 
 // Routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/guest', guestRoutes);
+app.use('/api/v1/admin', pipuproRoutes);
 
 // Basic route
 // * API DOCS

@@ -11,4 +11,5 @@ const IndividualSchema = new Schema({
     email: { type: String, required: true, unique: true },
 });
 
-export const Individual = mongoose.model('Individual', IndividualSchema);
+const Individual = mongoose.model('Individual', IndividualSchema);
+export default Individual;
