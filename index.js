@@ -19,6 +19,11 @@ import guestRoutes from './routes/guestRoutes.js';
 import pipuproRoutes from './routes/pipuproRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import staffRoutes from './routes/staffRoutes.js';
+import chatRoutes from './routes/staffRoutes.js';
+import meetingRoutes from './routes/meetingRoutes.js';
+import boardRoomRoutes from './routes/staffRoutes.js';
+import messageRoutes from './routes/staffRoutes.js';
+import generalRoutes from './routes/generalRoutes.js';
 
 // setups
 const __filename = fileURLToPath(import.meta.url);
@@ -84,6 +89,11 @@ app.use('/api/v1/company', companyRoutes);
 app.use('/api/v1/guest', guestRoutes);
 app.use('/api/v1/staff', staffRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/chats', chatRoutes);
+app.use('/api/v1/meetings', meetingRoutes);
+app.use('/api/v1/board-rooms', boardRoomRoutes);
+app.use('/api/v1/messages', messageRoutes);
+app.use('/api/v1', generalRoutes);
 
 // Basic route
 // * API DOCS

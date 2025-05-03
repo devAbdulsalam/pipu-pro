@@ -34,9 +34,20 @@ export const getDashboard = async (req, res) => {
 	}
 };
 
+export const getStaffs = async (req, res) => {
+    try {
+		const staff = await Employee.find({ companyId: req.params.companyId });
+		res.status(200).json(staff);
+    } catch (error) {
+        console.error('Error getting staff:', error);
+        return res
+		.status(500)
+            .json({ error: error.message || 'Internal server error' });
+    }
+};
 export const getStaff = async (req, res) => {
     try {
-        const staff = await Employee.find({ companyId: req.params.companyId });
+        const staff = await Employee.find({ _id: req.params.id });
         res.status(200).json(staff);
     } catch (error) {
         console.error('Error getting staff:', error);

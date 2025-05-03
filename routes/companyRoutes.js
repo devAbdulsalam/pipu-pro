@@ -1,21 +1,31 @@
 import express from 'express';
 import {
-    getAccounts,
     getDashboard,
-    getFinances,
-    updateSubscriptionPrices,
-    createSubscriptionPlan,
-    getSubscriptionPrices,
-} from '../controllers/pipupro.js';
+    getStaffs,
+    getStaff,
+	getLeaves,
+	getLeavesRequest,
+	payrollDashboard,
+	payroll,
+} from '../controllers/company.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
 const router = express.Router();
 
-router.get('/', requireAuth, verifyPermission(['ADMIN']), getDashboard);
-router.get('/accounts', requireAuth, verifyPermission(['ADMIN']), getAccounts);
-router.get('/finances', requireAuth, getFinances);
-router.get('/subscription-prices', requireAuth, getSubscriptionPrices);
-router.patch('/update-subscription-prices', requireAuth, updateSubscriptionPrices);
-router.post('/subscription-plans', requireAuth, createSubscriptionPlan);
+router.get(
+	'/dashboard',
+	requireAuth,
+	verifyPermission(['ADMIN']),
+	getDashboard
+);
+router.get('/staffs', requireAuth, verifyPermission(['ADMIN']), getStaffs);
+router.get('/staffs/:id', requireAuth, verifyPermission(['ADMIN']), getStaff);
+router.get('/leaves', requireAuth, verifyPermission(['ADMIN']), getLeaves);
+router.get('/leaves/:id', requireAuth, getLeavesRequest);
+router.get('/payroll', requireAuth, payrollDashboard);
+router.get('/payroll/:id', requireAuth, payroll);
+// router.get('/subscription-prices', requireAuth, getSubscriptionPrices);
+// router.patch('/update-subscription-prices', requireAuth, updateSubscriptionPrices);
+// router.post('/subscription-plans', requireAuth, createSubscriptionPlan);
 
 export default router;

@@ -10,7 +10,7 @@ const MeetingSchema = new mongoose.Schema(
 			required: true,
 			unique: true,
 		},
-		participantss: {
+		participants: {
 			type: [mongoose.Schema.Types.ObjectId],
 			ref: 'User',
 		},
