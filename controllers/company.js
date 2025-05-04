@@ -92,12 +92,101 @@ export const payrollDashboard = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
-export const payroll = async (req, res) => {
+export const payrollHistory = async (req, res) => {
 	try {
 		const visitors = await Visitor.find({ companyId: req.params.companyId });
 		res.status(200).json(visitors);
 	} catch (error) {
 		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const addPayroll = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const draftPayroll = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const payrollDrafts = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getPayroll = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+
+export const createMeeting = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getMeetings = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting meetings:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getMeeting = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting meetings:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getBoardRooms = async (req, res) => {
+	try {
+		const visitors = await Visitor.find({ companyId: req.params.companyId });
+		res.status(200).json(visitors);
+	} catch (error) {
+		console.error('Error getting boardrooms:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });

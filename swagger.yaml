@@ -2028,7 +2028,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object 
+                type: object
   /company/leaves:
     get:
       tags:
@@ -2088,7 +2088,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object 
+                type: object
   /company/leaves/{staffId}:
     get:
       tags:
@@ -2153,7 +2153,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object 
+                type: object
   /company/payroll-dashboard:
     get:
       tags:
@@ -2366,8 +2366,8 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Payroll drafted successfully. 
-  /company/payrolls-history:
+                      Payroll drafted successfully.
+  /company/payroll-history:
     get:
       tags:
         - 🏫 Company
@@ -2644,7 +2644,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object  
+                type: object
   /company/boardrooms:
     get:
       tags:
@@ -2764,7 +2764,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object  
+                type: object
     post:
       tags:
         - 🏫 Company
@@ -2857,7 +2857,72 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Meeting created successfully. 
+                      Meeting created successfully.
+  /company/meetings/{meetingId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company meeting by Id
+      description: >-
+        The API endpoint allows you to retrieve the company meeting by id
+      operationId: getCompanyMeetingById
+      parameters:
+        - name: meetingId
+          in: path
+          required: true
+          description: The meeting ID
+      responses:
+        '200':
+          description: Get company meeting by id
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
   /staff/dashboard:
     get:
       tags:
@@ -4300,7 +4365,7 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Subription created successfully.  
+                      Subription created successfully.
   /paystack-webhook:
     post:
       tags:
@@ -4376,7 +4441,7 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Subription created successfully.   
+                      Subription created successfully.
   /meetings:
     get:
       tags:
@@ -4436,7 +4501,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object  
+                type: object
     post:
       tags:
         - 🔄 General
@@ -4517,7 +4582,7 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Meeting joined successfully.   
+                      Meeting joined successfully.
 tags:
   - name: 🔐 Authentication
     description: >-

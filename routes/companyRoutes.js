@@ -1,12 +1,20 @@
 import express from 'express';
 import {
-    getDashboard,
-    getStaffs,
-    getStaff,
+	getDashboard,
+	getStaffs,
+	getStaff,
 	getLeaves,
 	getLeavesRequest,
 	payrollDashboard,
-	payroll,
+	payrollHistory,
+	addPayroll,
+	getPayroll,
+	draftPayroll,
+	payrollDrafts,
+	getBoardRooms,
+	getMeeting,
+	getMeetings,
+	createMeeting,
 } from '../controllers/company.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
@@ -22,10 +30,16 @@ router.get('/staffs', requireAuth, verifyPermission(['ADMIN']), getStaffs);
 router.get('/staffs/:id', requireAuth, verifyPermission(['ADMIN']), getStaff);
 router.get('/leaves', requireAuth, verifyPermission(['ADMIN']), getLeaves);
 router.get('/leaves/:id', requireAuth, getLeavesRequest);
-router.get('/payroll', requireAuth, payrollDashboard);
-router.get('/payroll/:id', requireAuth, payroll);
-// router.get('/subscription-prices', requireAuth, getSubscriptionPrices);
-// router.patch('/update-subscription-prices', requireAuth, updateSubscriptionPrices);
-// router.post('/subscription-plans', requireAuth, createSubscriptionPlan);
+router.get('/payroll-dashboard', requireAuth, payrollDashboard);
+router.get('/payroll-history', requireAuth, payrollHistory);
+router.get('/payroll-drafts', requireAuth, payrollDrafts);
+router.post('/payroll-drafts', requireAuth, draftPayroll);
+router.get('/payrolls', requireAuth, payrollDashboard);
+router.post('/payrolls', requireAuth, addPayroll);
+router.get('/payrolls/:id', requireAuth, getPayroll);
+router.get('/boardrooms', requireAuth, getBoardRooms);
+router.get('/meetings', requireAuth, getMeeting);
+router.get('/meetings/:id', requireAuth, getMeetings);
+router.post('/meetings', requireAuth, createMeeting);
 
 export default router;
