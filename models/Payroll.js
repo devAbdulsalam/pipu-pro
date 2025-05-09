@@ -1,19 +1,33 @@
 import mongoose from 'mongoose';
 const PayrollSchema = new mongoose.Schema(
 	{
-		employeeId: {
+		companyId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
+			ref: 'Company',
 			required: true,
 		},
-		amount: {
-			type: Number,
-			required: true,
+		status: {
+			type: String,
+			enum: ['pending', 'paid'],
+			default: 'pending',
 		},
-		dateProcessed: {
-			type: Date,
-			required: true,
-		},
+		employes: [
+			{
+				employeeId: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'User',
+					required: true,
+				},
+				amount: {
+					type: Number,
+					required: true,
+				},
+				dateProcessed: {
+					type: Date,
+					required: true,
+				},
+			},
+		],
 	},
 	{ timestamps: true }
 );

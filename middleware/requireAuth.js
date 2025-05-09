@@ -2,6 +2,9 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../models/User.js';
+import Company from '../models/Company.js';
+import Employee from '../models/Employee.js';
+import Visitor from '../models/Visitor.js';
 
 dotenv.config();
 
@@ -75,4 +78,21 @@ export const isAdmin = (req, res, next) => {
 		return res.status(403).json({ error: 'Forbidden.' });
 	}
 	next();
+};
+
+
+export const isCompany = async (req, res, next) => {
+	try {
+		const company = await Company.findOne({ userId: req.user._id });
+
+		if (!company) {
+			return res.status(401).json({ error: 'Invalid company' });
+		}
+
+		req.company = company;
+		next();
+	} catch (error) {
+		// console.log(error);
+		res.status(401).json({ error: 'Request is not authorized' });
+	}
 };

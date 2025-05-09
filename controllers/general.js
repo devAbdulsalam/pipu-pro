@@ -3,9 +3,11 @@ import Subscription from '../models/Subscription.js';
 import SubscriptionPlan from '../models/SubscriptionPlan.js';
 import crypto from 'crypto';
 import User from '../models/User.js';
+import axios from 'axios';
+// import { subscribe } from './general';
 export const getSubscriptionPlans = async (req, res) => {
 	try {
-        const plans = await SubscriptionPlan.find();
+		const plans = await SubscriptionPlan.find();
 		res.status(200).json(plans);
 	} catch (error) {
 		console.error('Error getting plans:', error);
@@ -65,7 +67,7 @@ export const subscribe = async (req, res) => {
 		);
 
 		const authorizationUrl = response.data.data.authorization_url;
-		res.json({ authorizationUrl });
+		res.json({ authorizationUrl, data: response.data.data });
 	} catch (error) {
 		console.error('Error creating subscribing:', error);
 		return res
@@ -73,12 +75,108 @@ export const subscribe = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
+export const verifyPaystackPayment = async (id) => {
+	try {
+		const response = await axios.get(
+			`https://api.paystack.co/transaction/verify/${id}`,
+			{
+				headers: {
+					Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+				},
+			}
+		);
+
+		return response.data.data; // Extract the transaction data
+	} catch (error) {
+		console.error(
+			'Payment verification failed:',
+			error.response?.data || error.message
+		);
+		throw {
+			message: 'Payment verification failed',
+			details: error.response?.data || error.message, // Return response details when available
+		};
+	}
+};
+
+export const verifyPayment = async (req, res) => {
+	try {
+		const { planId, paymentId } = req.body;
+		const subscribed = await Subscription.findOne({ paymentId });
+		if (subscribed) {
+			return res.status(404).json({ subscription: subscribed });
+		}
+		// Verify the payment with Paystack
+		const paymentData = await verifyPaystackPayment(paymentId);
+
+		if (paymentData.status === 'success') {
+			const userId = req.user._id;
+
+			// 1. Get plan details
+			const plan = await paymentId.findById(planId).select(
+				'name price duration'
+			);
+			
+
+			const { duration } = plan; // in days
+
+			// 2. Check for existing active subscription
+			const existingSubscription = await Subscription.findOne({
+				userId,
+				planId,
+				status: 'active',
+			});
+
+			// 3. Calculate start and end dates
+			const todayMidnight = startOfDay(new Date());
+
+			let startDate;
+			if (
+				existingSubscription &&
+				existingSubscription.endDate > todayMidnight
+			) {
+				startDate = startOfDay(new Date(existingSubscription.endDate)); // starts after existing ends
+			} else {
+				startDate = todayMidnight;
+			}
+
+			const endDate = startOfDay(addDays(startDate, duration));
+
+			// 4. Create subscription
+			const subscription = await Subscription.create({
+				userId,
+				planId,
+				startDate,
+				paymentId,
+				endDate,
+				status: 'active',
+				description: `paystack ${paymentId}`,
+			});
+
+			console.log('Subscription created in database');
+			res
+				.status(200)
+				.json({ message: 'Subscription created successfully', subscription });
+		} else {
+			res.status(400).json({
+				message: 'Payment verification failed',
+				details: paymentData,
+			});
+		}
+	} catch (error) {
+		console.error('Payment verification failed:', error);
+		res.status(500).json({
+			message: 'Payment verification failed',
+			details: error.details,
+		});
+	}
+};
 
 export const paystackWebhook = async (req, res) => {
 	try {
 		const hash = crypto
 			.createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
-			.update(body, 'utf-8')
+			.update(JSON.stringify(req.body))
 			.digest('hex');
 
 		if (hash == req.headers['x-paystack-signature']) {

@@ -1844,6 +1844,91 @@ paths:
                       totalPages: 50
                     message: user fetched successfully
                     success: true
+  /company:
+    post:
+      tags:
+        - 🏫 Company
+      summary: Add new Company
+      description: >-
+        The API endpoint allows new company.
+      operationId: addNewCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: john
+                phone:
+                  type: string
+                  example: '+234568908798'
+                email:
+                  type: string
+                  example: abc@gmail.com
+                password:
+                  type: string
+                  example: company123
+      responses:
+        '201':
+          description: New Company created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company added successfully.
   /company/dashboard:
     get:
       tags:
@@ -1964,6 +2049,99 @@ paths:
             application/json:
               schema:
                 type: object
+    post:
+      tags:
+        - 🏫 Company
+      summary: Add new staff
+      description: >-
+        The API endpoint allows company to add new staff.
+      operationId: addNewStaff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                name:
+                  type: string
+                  example: john
+                phone:
+                  type: string
+                  example: '+234568908798'
+                email:
+                  type: string
+                  example: abc@gmail.com
+                password:
+                  type: string
+                  example: '123456'
+                department:
+                  type: string
+                  example: finance
+                position:
+                  type: string
+                  example: chief
+      responses:
+        '201':
+          description: Employee created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Staff added successfully.
   /company/staff/{staffId}:
     get:
       tags:
@@ -2982,7 +3160,227 @@ paths:
           content:
             application/json:
               schema:
+                type: object 
+  /staff/attendance:
+    get:
+      tags:
+        - 👨‍👩‍👧‍👦 Staff
+      summary: Get staff attendance
+      description: >-
+        The API endpoint allows you to retrieve the staff attendance
+      operationId: getStaffAttendance
+      responses:
+        '200':
+          description: Get staff attendance
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
                 type: object
+    post:
+      tags:
+        - 👨‍👩‍👧‍👦 Staff
+      summary: Create new Attendance
+      description: >-
+        The API endpoint allows company to create new Attendance.
+      operationId: createNewAttendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                  description: '681e2429c5421ead94648571'
+                checkIn:
+                  type: string
+                  example: '2025-07-28T06:42:26.247Z'
+                  description: '2025-06-30T06:42:26.247Z'
+      responses:
+        '201':
+          description: New Attendance Created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Attendace marked successfully.    
+    patch:
+      tags:
+        - 👨‍👩‍👧‍👦 Staff
+      summary: checkOut Attendance
+      description: >-
+        The API endpoint allows company to checkOut Attendance.
+      operationId: checkOutAttendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                  description: '681e2429c5421ead94648571'
+                checkIn:
+                  type: string
+                  example: '2025-07-28T06:42:26.247Z'
+                  description: '2025-06-30T06:42:26.247Z'
+      responses:
+        '201':
+          description: check Out Attendance
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Attendace marked successfully.    
   /guest/visitor/registration:
     post:
       tags:
@@ -4307,6 +4705,85 @@ paths:
                 planId:
                   type: string
                   example: 680523ae6e97ead69d461bb3
+      responses:
+        '201':
+          description: Subscribe to a plan
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Subription created successfully.
+  /verify-payment:
+    post:
+      tags:
+        - 🔄 General
+      summary: Verify Subscription payment
+      description: >-
+        The API endpoint allows you to verify subscription payment
+      operationId: VerifySubscriptionPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                planId:
+                  type: string
+                  example: 680523ae6e97ead69d461bb3
+                paymentId:
+                  type: string
+                  example: 2ztvneaohdcccof
       responses:
         '201':
           description: Subscribe to a plan

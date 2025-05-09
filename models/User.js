@@ -42,6 +42,7 @@ const userSchema = new mongoose.Schema(
 				'GUEST',
 				'COMPANY',
 				'COMPANY_ADMIN',
+				'STAFF',
 				'ADMIN',
 				'SUPER_ADMIN',
 			],

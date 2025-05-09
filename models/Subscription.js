@@ -2,8 +2,9 @@
 import mongoose, { Schema } from 'mongoose';
 
 const subscriptionSchema = new Schema({
-	user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-	plan: { type: String, required: true },
+	userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+	planId: { type: String, required: true },
+	paymentId: { type: String, required: true },
 	description: { type: String },
 	startDate: { type: Date, required: true },
 	endDate: { type: Date, required: true },

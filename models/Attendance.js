@@ -2,12 +2,15 @@
 import mongoose, { Schema } from 'mongoose';
 
 const attendanceSchema = new Schema({
-	employee: { type: Schema.Types.ObjectId, ref: 'Employee', required: true },
-	checkIn: { type: Date, required: true },
+	companyId: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
+	employeId: { type: Schema.Types.ObjectId, ref: 'Employee', required: true },
+	userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+	checkIn: { type: Date },
 	checkOut: { type: Date },
+	category: { type: String},
 	status: {
 		type: String,
-		enum: ['ontime', 'absent', 'late'],
+		enum: ['ontime', 'absent', 'late', 'absent'],
 		default: 'ontime',
 	},
 });

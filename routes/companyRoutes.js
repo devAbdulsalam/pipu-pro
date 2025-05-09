@@ -2,6 +2,7 @@ import express from 'express';
 import {
 	getDashboard,
 	getStaffs,
+	addStaff,
 	getStaff,
 	getLeaves,
 	getLeavesRequest,
@@ -15,20 +16,23 @@ import {
 	getMeeting,
 	getMeetings,
 	createMeeting,
+	createCompany,
 } from '../controllers/company.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
 const router = express.Router();
 
+router.post('/', createCompany);
 router.get(
 	'/dashboard',
 	requireAuth,
-	verifyPermission(['ADMIN']),
+	verifyPermission(['COMPANY']),
 	getDashboard
 );
-router.get('/staffs', requireAuth, verifyPermission(['ADMIN']), getStaffs);
-router.get('/staffs/:id', requireAuth, verifyPermission(['ADMIN']), getStaff);
-router.get('/leaves', requireAuth, verifyPermission(['ADMIN']), getLeaves);
+router.get('/staffs', requireAuth, verifyPermission(['COMPANY']), getStaffs);
+router.post('/staffs', requireAuth, verifyPermission(['COMPANY']), addStaff);
+router.get('/staffs/:id', requireAuth, verifyPermission(['COMPANY']), getStaff);
+router.get('/leaves', requireAuth, verifyPermission(['COMPANY']), getLeaves);
 router.get('/leaves/:id', requireAuth, getLeavesRequest);
 router.get('/payroll-dashboard', requireAuth, payrollDashboard);
 router.get('/payroll-history', requireAuth, payrollHistory);

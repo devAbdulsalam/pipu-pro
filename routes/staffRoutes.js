@@ -1,21 +1,27 @@
 import express from 'express';
 import {
-    getDashboard,
-    // getAccounts,
-    // getFinances,
-    // updateSubscriptionPrices,
-    // createSubscriptionPlan,
-    // getSubscriptionPrices,
-} from '../controllers/pipupro.js';
+	getDashboard,
+	getAttendance,
+	markAttendance,
+	checkOutAttendance,
+} from '../controllers/staff.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
 const router = express.Router();
 
-router.get('/', requireAuth, verifyPermission(['ADMIN']), getDashboard);
-// router.get('/accounts', requireAuth, verifyPermission(['ADMIN']), getAccounts);
-// router.get('/finances', requireAuth, getFinances);
-// router.get('/subscription-prices', requireAuth, getSubscriptionPrices);
-// router.patch('/update-subscription-prices', requireAuth, updateSubscriptionPrices);
-// router.post('/subscription-plans', requireAuth, createSubscriptionPlan);
+router.get(
+	'/dashboard',
+	requireAuth,
+	verifyPermission(['STAFF']),
+	getDashboard
+);
+router.get('/attendance', requireAuth, verifyPermission(['STAFF']), getAttendance);
+router.post('/attendance', requireAuth, verifyPermission(['STAFF']), markAttendance);
+router.patch(
+	'/attendance',
+	requireAuth,
+	verifyPermission(['STAFF']),
+	checkOutAttendance
+);
 
 export default router;
