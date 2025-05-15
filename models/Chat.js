@@ -11,6 +11,10 @@ const ChatSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
+		meetingId: {
+			type: Schema.Types.ObjectId,
+			ref: 'Meeting',
+		},
 		latestMessage: {
 			type: Schema.Types.ObjectId,
 			ref: 'Message',
