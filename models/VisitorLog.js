@@ -10,5 +10,5 @@ const VisitorLogSchema = new Schema(
 	{ timestamps: true }
 );
 
-export const VisitorLog = mongoose.model('VisitorLog', VisitorLogSchema);
+const VisitorLog = mongoose.model('VisitorLog', VisitorLogSchema);
 export default VisitorLog;
