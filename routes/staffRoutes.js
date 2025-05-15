@@ -4,6 +4,7 @@ import {
 	getAttendance,
 	markAttendance,
 	checkOutAttendance,
+	sendLeaveRequest,
 } from '../controllers/staff.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
@@ -22,6 +23,12 @@ router.patch(
 	requireAuth,
 	verifyPermission(['STAFF']),
 	checkOutAttendance
+);
+router.post(
+	'/leaves',
+	requireAuth,
+	verifyPermission(['STAFF']),
+	sendLeaveRequest
 );
 
 export default router;

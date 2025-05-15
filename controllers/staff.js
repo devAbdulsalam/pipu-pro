@@ -113,6 +113,17 @@ export const getLeave = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
+export const sendLeaveRequest = async (req, res) => {
+	try {
+		const leave = await Leave.create(req.body);
+		res.status(200).json(leave);
+	} catch (error) {
+		console.error('Error getting visitors:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
 
 export const getLeaveRequest = async (req, res) => {
 	try {
