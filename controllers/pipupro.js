@@ -82,6 +82,35 @@ export const getSubscriptionPrices = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
+export const getSubscriptions = async (req, res) => {
+	try {
+		const subscribers = await Subscription.find()
+			.select('userId paymentId planId')
+			.populate('userId', 'name avatar email')
+			.populate('planId')
+			.populate('paymentId');
+		res.status(200).json(subscribers);
+	} catch (error) {
+		console.error('Error getting subscriptions:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getSubscription = async (req, res) => {
+	try {
+		const subscription = await Subscription.find({ _id: req.params.id })
+			.populate('userId', 'name avatar email')
+			.populate('planId')
+			.populate('paymentId');
+		res.status(200).json(subscription);
+	} catch (error) {
+		console.error('Error getting subscription:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
 export const createSubscriptionPlan = async (req, res) => {
 	try {
 		const newPlan = await SubscriptionPlan.create(req.body);
