@@ -19,10 +19,10 @@ import guestRoutes from './routes/guestRoutes.js';
 import pipuproRoutes from './routes/pipuproRoutes.js';
 import companyRoutes from './routes/companyRoutes.js';
 import staffRoutes from './routes/staffRoutes.js';
-import chatRoutes from './routes/staffRoutes.js';
+import chatRoutes from './routes/chatRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';
 import boardRoomRoutes from './routes/staffRoutes.js';
-import messageRoutes from './routes/staffRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 import generalRoutes from './routes/generalRoutes.js';
 
 // setups

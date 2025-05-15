@@ -171,10 +171,10 @@ export const getVisitors = async (req, res) => {
 };
 export const getMeetings = async (req, res) => {
 	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
+		const meetings = await Meeting.find({ companyId: req.params.companyId });
+		res.status(200).json(meetings);
 	} catch (error) {
-		console.error('Error getting visitors:', error);
+		console.error('Error getting meetings:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -182,10 +182,10 @@ export const getMeetings = async (req, res) => {
 };
 export const getCustomers = async (req, res) => {
 	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
+		const customers = await Customer.find({ companyId: req.params.companyId });
+		res.status(200).json(customers);
 	} catch (error) {
-		console.error('Error getting visitors:', error);
+		console.error('Error getting customers:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -193,10 +193,10 @@ export const getCustomers = async (req, res) => {
 };
 export const getTickets = async (req, res) => {
 	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
+		const tickets = await Ticket.find({ companyId: req.params.companyId });
+		res.status(200).json(tickets);
 	} catch (error) {
-		console.error('Error getting visitors:', error);
+		console.error('Error getting tickets:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -204,7 +204,7 @@ export const getTickets = async (req, res) => {
 };
 export const createTicket = async (req, res) => {
 	try {
-		const ticket = await Ticket.find({ companyId: req.params.companyId });
+		const ticket = await Ticket.create(req.body);
 		res.status(200).json(ticket);
 	} catch (error) {
 		console.error('Error getting ticket:', error);
@@ -215,10 +215,10 @@ export const createTicket = async (req, res) => {
 };
 export const getTicket = async (req, res) => {
 	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
+		const ticket = await Ticket.find({ _id: req.params.id });
+		res.status(200).json(ticket);
 	} catch (error) {
-		console.error('Error getting visitors:', error);
+		console.error('Error getting ticket:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -226,10 +226,10 @@ export const getTicket = async (req, res) => {
 };
 export const getComplaints = async (req, res) => {
 	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
+		const complaints = await Complaint.find({ companyId: req.params.companyId });
+		res.status(200).json(complaints);
 	} catch (error) {
-		console.error('Error getting visitors:', error);
+		console.error('Error getting complaints:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
