@@ -17,6 +17,10 @@ import {
 	getMeetings,
 	createMeeting,
 	createCompany,
+	createTicket,
+	getTickets,
+	getTicket,
+	updateTicket,
 } from '../controllers/company.js';
 import { requireAuth, verifyPermission } from '../middleware/requireAuth.js';
 
@@ -45,5 +49,9 @@ router.get('/boardrooms', requireAuth, getBoardRooms);
 router.get('/meetings', requireAuth, getMeeting);
 router.get('/meetings/:id', requireAuth, getMeetings);
 router.post('/meetings', requireAuth, createMeeting);
+router.get('/tickets', requireAuth, getTickets);
+router.get('/tickets/:id', requireAuth, getTicket);
+router.post('/tickets', requireAuth, createTicket);
+router.patch('/tickets', requireAuth, updateTicket);
 
 export default router;

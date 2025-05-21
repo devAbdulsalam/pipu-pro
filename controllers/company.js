@@ -9,6 +9,7 @@ import Leave from '../models/Leave.js';
 import Company from '../models/Company.js';
 import Subscription from '../models/Subscription.js';
 import Payroll from '../models/Payroll.js';
+import Ticket from '../models/Ticket.js';
 import { generateUniqueCode } from '../utils/generateUniqueCode.js';
 import { hash, verifyHash } from '../utils/hash.js';
 export const getDashboard = async (req, res) => {
@@ -350,6 +351,61 @@ export const getBoardRooms = async (req, res) => {
 		res.status(200).json(visitors);
 	} catch (error) {
 		console.error('Error getting boardrooms:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const createTicket = async (req, res) => {
+	try {
+		const companyId = req.user._id;
+		const createdBy = req.user._id;
+		const ticket = await Ticket.create({ companyId, createdBy, ...req.body });
+		res.status(200).json(ticket);
+	} catch (error) {
+		console.error('Error getting ticket:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getTickets = async (req, res) => {
+	try {
+		const companyId = '681e2429c5421ead94648571';
+		// const companyId = req.user._id;
+		const tickets = await Ticket.find({ companyId });
+		res.status(200).json(tickets);
+	} catch (error) {
+		console.error('Error getting tickets:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getTicket = async (req, res) => {
+	try {
+		const ticket = await Ticket.findOne({ _id: req.params.id });
+		res.status(200).json(ticket);
+	} catch (error) {
+		console.error('Error getting ticket:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const updateTicket = async (req, res) => {
+	try {
+		const ticketId = req.body.ticketId;
+		if (!ticketId) {
+			return res.status(400).json({ error: 'Ticket Id is required' });
+		}
+		const ticket = await Ticket.findByIdAndUpdate(
+			{ _id: ticketId },
+			{ ...req.body }
+		);
+		res.status(200).json(ticket);
+	} catch (error) {
+		console.error('Error updating ticket:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });

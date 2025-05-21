@@ -7,9 +7,14 @@ const TicketSchema = new Schema({
 		ref: 'Company',
 		required: true,
 	},
+	createdBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 	title: { type: String, required: true },
 	type: { type: String },
-	client: { type: String },
+	clients: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 	message: { type: String },
 	assignedTo: [
 		{ type: Schema.Types.ObjectId, ref: 'Employee', required: true },
