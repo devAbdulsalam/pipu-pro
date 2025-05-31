@@ -1,3 +1,9 @@
+import { app, io } from '../index.js';
+import { v4 as uuidv4 } from 'uuid';
+import Chat from '../models/Chat.js';
+import ChatMessage from '../models/ChatMessage.js';
+
+
 io.on('connection', (socket) => {
 	console.log('socket is active to be connected');
 	socket.on('setup', (userData) => {

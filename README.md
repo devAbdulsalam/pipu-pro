@@ -188,3 +188,9 @@ source ~/.bashrc
 /Users/macbookpro/Downloads/pipu-pro-api-keys.pem
 https://www.youtube.com/watch?v=s4TWZqN7VZs
 # upload to aws EC2 instance
+
+
+<!-- meeting 
+2 free,  
+
+make more reseach on video confresing-->

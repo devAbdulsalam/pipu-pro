@@ -4,6 +4,7 @@ import Activity from '../models/Activity.js';
 import { generateUniqueCode } from '../utils/generateUniqueCode.js';
 import Meeting from '../models/Meeting.js';
 
+
 export const getMeetings = async (req, res) => {
 	try {
 		const meeting = await Meeting.find({ companyId: req.params.companyId });
@@ -32,7 +33,7 @@ export const getMyMeetings = async (req, res) => {
 };
 export const updateMeeting = async (req, res) => {
 	try {
-		const { title, description, date, time, duration } = req.body;
+		const { title, description, date, time, duration, maxUsers } = req.body;
 		const meeting = await Meeting.findByIdAndUpdate(
 			req.params.id,
 			{ title, description, date, time, duration },
@@ -51,12 +52,14 @@ export const updateMeeting = async (req, res) => {
 };
 export const createMeeting = async (req, res) => {
 	try {
-		const { title, description, date, time, duration, participants } = req.body;
+		const { title, description, date, time, duration, maxUsers, participants } =
+			req.body;
 		const meetingId = generateUniqueCode(8);
 		const newMeeting = new Meeting({
 			title,
 			description,
 			date,
+			maxUsers,
 			time,
 			duration,
 			participants,
@@ -82,7 +85,17 @@ export const getMeetingById = async (req, res) => {
 		if (!meeting) {
 			return res.status(404).json({ message: 'Meeting not found' });
 		}
-		res.status(200).json(meeting);
+		res.json({
+			meetingId: meeting.meetingId,
+			userCount: meeting.users.length,
+			maxUsers: meeting.maxUsers,
+			users: meeting.users.map((user) => ({
+				id: user.userId,
+				name: user.name,
+				isAudioEnabled: user.isAudioEnabled,
+				isVideoEnabled: user.isVideoEnabled,
+			})),
+		});
 	} catch (error) {
 		console.error('Error getting meeting:', error);
 		return res
@@ -217,34 +230,34 @@ export const leaveMeeting = async (req, res) => {
 };
 
 export const getMeetingByCode = async (req, res) => {
-    try {
-        const { code } = req.params;
+	try {
+		const { code } = req.params;
 
-        // Check if the meeting exists
-        const meeting = await Meeting.findOne({ accessCode: code });
-        if (!meeting) {
-            return res.status(404).json({ message: 'Meeting not found' });
-        }
-        res.status(200).json({ meeting });
-    } catch (error) {
-        console.error('Error getting meeting by code:', error);
-        return res
-            .status(500)
-            .json({ error: error.message || 'Internal server error' });
-    }
+		// Check if the meeting exists
+		const meeting = await Meeting.findOne({ accessCode: code });
+		if (!meeting) {
+			return res.status(404).json({ message: 'Meeting not found' });
+		}
+		res.status(200).json({ meeting });
+	} catch (error) {
+		console.error('Error getting meeting by code:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
 };
 
 export const deleteMeeting = async (req, res) => {
-    try {
-        const meeting = await Meeting.findByIdAndDelete(req.params.id);
-        if (!meeting) {
-            return res.status(404).json({ message: 'Meeting not found' });
-        }
-        res.status(200).json({ message: 'Meeting deleted successfully' });
-    } catch (error) {
-        console.error('Error deleting meeting:', error);
-        return res
-            .status(500)
-            .json({ error: error.message || 'Internal server error' });
-    }
+	try {
+		const meeting = await Meeting.findByIdAndDelete(req.params.id);
+		if (!meeting) {
+			return res.status(404).json({ message: 'Meeting not found' });
+		}
+		res.status(200).json({ message: 'Meeting deleted successfully' });
+	} catch (error) {
+		console.error('Error deleting meeting:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
 };

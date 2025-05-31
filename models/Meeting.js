@@ -5,6 +5,18 @@ const MeetingSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+
+		maxUsers: { type: Number, default: 10 },
+		users: [
+			{
+				userId: String,
+				socketId: String,
+				name: String,
+				isAudioEnabled: Boolean,
+				isVideoEnabled: Boolean,
+				joinedAt: { type: Date, default: Date.now },
+			},
+		],
 		meetingId: {
 			type: String,
 			required: true,

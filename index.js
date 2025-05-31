@@ -4,7 +4,10 @@ import mongoose from 'mongoose';
 import { rateLimit } from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import http from 'http';
+import { Server } from 'socket.io';
 import cors from 'cors';
+import { v4 as uuidv4 } from 'uuid';
 import helmet from 'helmet';
 import fs from 'fs';
 import path from 'path';
@@ -32,7 +35,14 @@ const file = fs.readFileSync(path.resolve(__dirname, './swagger.yaml'), 'utf8');
 const swaggerDocument = YAML.parse(file);
 
 dotenv.config();
-const app = express();
+export const app = express();
+const server = http.createServer(app);
+export const io = new Server(server, {
+	cors: {
+		origin: '*',
+		methods: ['GET', 'POST'],
+	},
+});
 const PORT = process.env.PORT || 5000;
 // Rate limiter to avoid misuse of the service and avoid cost spikes
 const limiter = rateLimit({
@@ -82,7 +92,15 @@ app.use(express.json());
 
 // Connect to database
 connectDB();
-
+// REST API Routes
+app.get('/api/health', (req, res) => {
+	res.json({
+		status: 'OK',
+		timestamp: new Date().toISOString(),
+		dbStatus:
+			mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+	});
+});
 // Routes
 app.use('/api/v1/admin', pipuproRoutes);
 app.use('/api/v1/company', companyRoutes);
@@ -112,4 +130,18 @@ app.use(
 // Start server
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
+	console.log(`Health check: http://localhost:${PORT}/api/health`);
 });
+
+// Graceful shutdown
+const shutdown = async () => {
+	console.log('Shutting down gracefully...');
+	await mongoose.connection.close();
+	server.close(() => {
+		console.log('Server closed');
+		process.exit(0);
+	});
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);

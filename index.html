@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Conference Client</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+        }
+
+        .join-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 400px;
+            margin: 2rem auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .video-container {
+            display: none;
+            flex: 1;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .video-container.active {
+            display: grid;
+        }
+
+        .video-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .video-element {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: #2c3e50;
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        .media-status {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .status-icon.audio-on {
+            background: #27ae60;
+            color: white;
+        }
+
+        .status-icon.audio-off {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .status-icon.video-on {
+            background: #3498db;
+            color: white;
+        }
+
+        .status-icon.video-off {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .controls.active {
+            display: flex;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .room-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .room-info.active {
+            display: block;
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                bottom: 1rem;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+            
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🎥 Live Video Conference</h1>
+        <p>Connect with multiple users in real-time</p>
+    </header>
+
+    <main class="main-container">
+        <!-- Join Form -->
+        <div id="joinForm" class="join-form">
+            <h2 style="text-align: center; margin-bottom: 1.5rem; color: #333;">Join Conference</h2>
+            
+            <div class="form-group">
+                <label for="userName">Your Name:</label>
+                <input type="text" id="userName" placeholder="Enter your name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomId">Room ID:</label>
+                <input type="text" id="roomId" placeholder="Enter room ID or leave empty to create new">
+            </div>
+            
+            <div class="form-group" style="text-align: center; gap: 1rem; display: flex;">
+                <button id="createRoomBtn" class="btn btn-success">Create New Room</button>
+                <button id="joinRoomBtn" class="btn btn-primary">Join Room</button>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message"></div>
+
+        <!-- Room Info -->
+        <div id="roomInfo" class="room-info">
+            <h3>Room Information</h3>
+            <p><strong>Room ID:</strong> <span id="currentRoomId"></span></p>
+            <p><strong>Participants:</strong> <span id="participantCount">0</span></p>
+        </div>
+
+        <!-- Video Container -->
+        <div id="videoContainer" class="video-container">
+            <!-- Videos will be dynamically added here -->
+        </div>
+
+        <!-- Controls -->
+        <div id="controls" class="controls">
+            <button id="toggleAudio" class="control-btn btn-success" title="Toggle Audio">🎤</button>
+            <button id="toggleVideo" class="control-btn btn-primary" title="Toggle Video">📹</button>
+            <button id="shareScreen" class="control-btn btn-warning" title="Share Screen">🖥️</button>
+            <button id="leaveRoom" class="control-btn btn-danger" title="Leave Room">📞</button>
+        </div>
+    </main>
+
+    <script>
+        class VideoConferenceClient {
+            constructor() {
+                this.socket = io();
+                this.localStream = null;
+                this.remoteStreams = new Map();
+                this.peerConnections = new Map();
+                this.currentRoomId = null;
+                this.currentUserId = null;
+                this.isAudioEnabled = true;
+                this.isVideoEnabled = true;
+                
+                this.setupSocketEvents();
+                this.setupUIEvents();
+                this.setupWebRTC();
+            }
+
+            setupSocketEvents() {
+                this.socket.on('joined-room', (data) => {
+                    console.log('Joined room:', data);
+                    this.currentRoomId = data.roomId;
+                    this.currentUserId = data.userId;
+                    this.showVideoContainer();
+                    this.updateRoomInfo();
+                    
+                    // Connect to existing users
+                    data.users.forEach(user => {
+                        if (user.id !== this.currentUserId) {
+                            this.createPeerConnection(user.id, true);
+                        }
+                    });
+                });
+
+                this.socket.on('user-joined', (data) => {
+                    console.log('User joined:', data);
+                    this.createPeerConnection(data.userId, false);
+                    this.updateRoomInfo();
+                });
+
+                this.socket.on('user-left', (data) => {
+                    console.log('User left:', data);
+                    this.removePeerConnection(data.userId);
+                    this.updateRoomInfo();
+                });
+
+                this.socket.on('offer', async (data) => {
+                    console.log('Received offer from:', data.fromUserId);
+                    const pc = this.peerConnections.get(data.fromUserId);
+                    if (pc) {
+                        await pc.setRemoteDescription(data.offer);
+                        const answer = await pc.createAnswer();
+                        await pc.setLocalDescription(answer);
+                        
+                        this.socket.emit('answer', {
+                            answer: answer,
+                            targetUserId: data.fromUserId,
+                            fromUserId: this.currentUserId
+                        });
+                    }
+                });
+
+                this.socket.on('answer', async (data) => {
+                    console.log('Received answer from:', data.fromUserId);
+                    const pc = this.peerConnections.get(data.fromUserId);
+                    if (pc) {
+                        await pc.setRemoteDescription(data.answer);
+                    }
+                });
+
+                this.socket.on('ice-candidate', async (data) => {
+                    const pc = this.peerConnections.get(data.fromUserId);
+                    if (pc) {
+                        await pc.addIceCandidate(data.candidate);
+                    }
+                });
+
+                this.socket.on('user-audio-toggle', (data) => {
+                    this.updateUserMediaStatus(data.userId, 'audio', data.isAudioEnabled);
+                });
+
+                this.socket.on('user-video-toggle', (data) => {
+                    this.updateUserMediaStatus(data.userId, 'video', data.isVideoEnabled);
+                });
+
+                this.socket.on('error', (data) => {
+                    this.showError(data.message);
+                });
+            }
+
+            setupUIEvents() {
+                document.getElementById('createRoomBtn').addEventListener('click', () => {
+                    this.createRoom();
+                });
+
+                document.getElementById('joinRoomBtn').addEventListener('click', () => {
+                    this.joinRoom();
+                });
+
+                document.getElementById('toggleAudio').addEventListener('click', () => {
+                    this.toggleAudio();
+                });
+
+                document.getElementById('toggleVideo').addEventListener('click', () => {
+                    this.toggleVideo();
+                });
+
+                document.getElementById('leaveRoom').addEventListener('click', () => {
+                    this.leaveRoom();
+                });
+            }
+
+            async setupWebRTC() {
+                try {
+                    this.localStream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: true
+                    });
+                    console.log('Local stream obtained');
+                } catch (error) {
+                    console.error('Error accessing media devices:', error);
+                    this.showError('Could not access camera/microphone');
+                }
+            }
+
+            async createRoom() {
+                const userName = document.getElementById('userName').value.trim();
+                if (!userName) {
+                    this.showError('Please enter your name');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/rooms', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    const data = await response.json();
+                    
+                    document.getElementById('roomId').value = data.roomId;
+                    this.joinRoom();
+                } catch (error) {
+                    this.showError('Failed to create room');
+                }
+            }
+
+            joinRoom() {
+                const userName = document.getElementById('userName').value.trim();
+                const roomId = document.getElementById('roomId').value.trim();
+
+                if (!userName) {
+                    this.showError('Please enter your name');
+                    return;
+                }
+
+                if (!roomId) {
+                    this.showError('Please enter a room ID or create a new room');
+                    return;
+                }
+
+                this.socket.emit('join-room', {
+                    roomId: roomId,
+                    userInfo: {
+                        name: userName,
+                        isAudioEnabled: this.isAudioEnabled,
+                        isVideoEnabled: this.isVideoEnabled
+                    }
+                });
+            }
+
+            createPeerConnection(userId, isInitiator) {
+                const pc = new RTCPeerConnection({
+                    iceServers: [
+                        { urls: 'stun:stun.l.google.com:19302' },
+                        { urls: 'stun:stun1.l.google.com:19302' }
+                    ]
+                });
+
+                // Add local stream
+                if (this.localStream) {
+                    this.localStream.getTracks().forEach(track => {
+                        pc.addTrack(track, this.localStream);
+                    });
+                }
+
+                // Handle remote stream
+                pc.ontrack = (event) => {
+                    console.log('Received remote stream from:', userId);
+                    const [remoteStream] = event.streams;
+                    this.remoteStreams.set(userId, remoteStream);
+                    this.addVideoElement(userId, remoteStream, false);
+                };
+
+                // Handle ICE candidates
+                pc.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        this.socket.emit('ice-candidate', {
+                            candidate: event.candidate,
+                            targetUserId: userId,
+                            fromUserId: this.currentUserId
+                        });
+                    }
+                };
+
+                this.peerConnections.set(userId, pc);
+
+                // Create offer if initiator
+                if (isInitiator) {
+                    this.createOffer(userId);
+                }
+            }
+
+            async createOffer(userId) {
+                const pc = this.peerConnections.get(userId);
+                if (pc) {
+                    const offer = await pc.createOffer();
+                    await pc.setLocalDescription(offer);
+                    
+                    this.socket.emit('offer', {
+                        offer: offer,
+                        targetUserId: userId,
+                        fromUserId: this.currentUserId
+                    });
+                }
+            }
+
+            removePeerConnection(userId) {
+                const pc = this.peerConnections.get(userId);
+                if (pc) {
+                    pc.close();
+                    this.peerConnections.delete(userId);
+                }
+                
+                this.remoteStreams.delete(userId);
+                this.removeVideoElement(userId);
+            }
+
+            addVideoElement(userId, stream, isLocal = false) {
+                const container = document.getElementById('videoContainer');
+                
+                // Add local video first
+                if (isLocal && !document.getElementById('local-video')) {
+                    const localWrapper = document.createElement('div');
+                    localWrapper.className = 'video-wrapper';
+                    localWrapper.id = `video-wrapper-local`;
+                    
+                    localWrapper.innerHTML = `
+                        <video id="local-video" class="video-element" autoplay muted playsinline></video>
+                        <div class="video-info">
+                            <span class="user-name">You</span>
+                            <div class="media-status">
+                                <div class="status-icon audio-on" id="local-audio-status">🎤</div>
+                                <div class="status-icon video-on" id="local-video-status">📹</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(localWrapper);
+                    document.getElementById('local-video').srcObject = stream;
+                }
+                
+                // Add remote video
+                if (!isLocal && !document.getElementById(`video-${userId}`)) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'video-wrapper';
+                    wrapper.id = `video-wrapper-${userId}`;
+                    
+                    wrapper.innerHTML = `
+                        <video id="video-${userId}" class="video-element" autoplay playsinline></video>
+                        <div class="video-info">
+                            <span class="user-name">User ${userId.substring(0, 8)}</span>
+                            <div class="media-status">
+                                <div class="status-icon audio-on" id="audio-status-${userId}">🎤</div>
+                                <div class="status-icon video-on" id="video-status-${userId}">📹</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(wrapper);
+                    document.getElementById(`video-${userId}`).srcObject = stream;
+                }
+            }
+
+            removeVideoElement(userId) {
+                const wrapper = document.getElementById(`video-wrapper-${userId}`);
+                if (wrapper) {
+                    wrapper.remove();
+                }
+            }
+
+            toggleAudio() {
+                if (this.localStream) {
+                    const audioTrack = this.localStream.getAudioTracks()[0];
+                    if (audioTrack) {
+                        audioTrack.enabled = !audioTrack.enabled;
+                        this.isAudioEnabled = audioTrack.enabled;
+                        
+                        // Update UI
+                        const btn = document.getElementById('toggleAudio');
+                        const status = document.getElementById('local-audio-status');
+                        
+                        if (this.isAudioEnabled) {
+                            btn.className = 'control-btn btn-success';
+                            btn.textContent = '🎤';
+                            status.className = 'status-icon audio-on';
+                        } else {
+                            btn.className = 'control-btn btn-danger';
+                            btn.textContent = '🔇';
+                            status.className = 'status-icon audio-off';
+                        }
+                        
+                        // Notify other users
+                        this.socket.emit('toggle-audio', {
+                            isAudioEnabled: this.isAudioEnabled
+                        });
+                    }
+                }
+            }
+
+            toggleVideo() {
+                if (this.localStream) {
+                    const videoTrack = this.localStream.getVideoTracks()[0];
+                    if (videoTrack) {
+                        videoTrack.enabled = !videoTrack.enabled;
+                        this.isVideoEnabled = videoTrack.enabled;
+                        
+                        // Update UI
+                        const btn = document.getElementById('toggleVideo');
+                        const status = document.getElementById('local-video-status');
+                        
+                        if (this.isVideoEnabled) {
+                            btn.className = 'control-btn btn-primary';
+                            btn.textContent = '📹';
+                            status.className = 'status-icon video-on';
+                        } else {
+                            btn.className = 'control-btn btn-danger';
+                            btn.textContent = '📵';
+                            status.className = 'status-icon video-off';
+                        }
+                        
+                        // Notify other users
+                        this.socket.emit('toggle-video', {
+                            isVideoEnabled: this.isVideoEnabled
+                        });
+                    }
+                }
+            }
+
+            updateUserMediaStatus(userId, mediaType, isEnabled) {
+                const statusElement = document.getElementById(`${mediaType}-status-${userId}`);
+                if (statusElement) {
+                    if (mediaType === 'audio') {
+                        statusElement.className = isEnabled ? 'status-icon audio-on' : 'status-icon audio-off';
+                        statusElement.textContent = isEnabled ? '🎤' : '🔇';
+                    } else if (mediaType === 'video') {
+                        statusElement.className = isEnabled ? 'status-icon video-on' : 'status-icon video-off';
+                        statusElement.textContent = isEnabled ? '📹' : '📵';
+                    }
+                }
+            }
+
+            leaveRoom() {
+                // Close all peer connections
+                this.peerConnections.forEach(pc => pc.close());
+                this.peerConnections.clear();
+                this.remoteStreams.clear();
+                
+                // Stop local stream
+                if (this.localStream) {
+                    this.localStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Reset UI
+                this.hideVideoContainer();
+                this.currentRoomId = null;
+                this.currentUserId = null;
+                
+                // Disconnect socket (it will auto-reconnect)
+                this.socket.disconnect();
+                this.socket.connect();
+            }
+
+            showVideoContainer() {
+                document.getElementById('joinForm').style.display = 'none';
+                document.getElementById('videoContainer').classList.add('active');
+                document.getElementById('controls').classList.add('active');
+                document.getElementById('roomInfo').classList.add('active');
+                
+                // Add local video
+                if (this.localStream) {
+                    this.addVideoElement('local', this.localStream, true);
+                }
+            }
+
+            hideVideoContainer() {
+                document.getElementById('joinForm').style.display = 'block';
+                document.getElementById('videoContainer').classList.remove('active');
+                document.getElementById('controls').classList.remove('active');
+                document.getElementById('roomInfo').classList.remove('active');
+                
+                // Clear video container
+                document.getElementById('videoContainer').innerHTML = '';
+            }
+
+            updateRoomInfo() {
+                if (this.currentRoomId) {
+                    document.getElementById('currentRoomId').textContent = this.currentRoomId;
+                    document.getElementById('participantCount').textContent = this.peerConnections.size + 1;
+                }
+            }
+
+            showError(message) {
+                const errorEl = document.getElementById('errorMessage');
+                errorEl.textContent = message;
+                errorEl.classList.add('active');
+                
+                setTimeout(() => {
+                    errorEl.classList.remove('active');
+                }, 5000);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new VideoConferenceClient();
+        });
+    </script>
+</body>
+</html>
