@@ -1,15 +1,19 @@
 import mongoose from 'mongoose';
 const MeetingSchema = new mongoose.Schema(
 	{
-		name: {
+		title: {
 			type: String,
 			required: true,
 		},
-
+		description: String,
 		maxUsers: { type: Number, default: 10 },
 		users: [
 			{
-				userId: String,
+				userId: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'User',
+					required: true,
+				},
 				socketId: String,
 				name: String,
 				isAudioEnabled: Boolean,
@@ -27,24 +31,25 @@ const MeetingSchema = new mongoose.Schema(
 			ref: 'User',
 		},
 		host: {
-			type: [mongoose.Schema.Types.ObjectId],
+			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
 			required: true,
 		},
 		accessType: {
 			type: String,
-			required: true,
+			default: 'private',
+			enum: ['public', 'private'],
 		},
-		accessCode: {
+		passCode: {
 			type: String,
-			required: true,
+		},
+		date: {
+			type: Date,
 		},
 		startTime: {
 			type: Date,
 		},
-		endTime: {
-			type: Date,
-		},
+		duration: { type: Number, default: 10 }, // in minutes
 	},
 	{ timestamps: true }
 );

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import  Chat  from './../models/Chat.js';
-import  User  from './../models/User.js';
-import  Group  from '../models/Board.js';
+import Chat from './../models/Chat.js';
+import User from './../models/User.js';
+import Group from '../models/Board.js';
 
 //@description     Create or fetch One to One Chat
 //@route           POST /api/chat/
@@ -11,7 +11,9 @@ const accessChat = async (req, res) => {
 
 	if (!userId) {
 		console.log('UserId param not sent with request');
-		return res.sendStatus(400);
+		return res.status(400).json({
+			message: 'UserId param not sent with request',
+		});
 	}
 	try {
 		var isChat = await Chat.find({
@@ -30,7 +32,7 @@ const accessChat = async (req, res) => {
 		});
 
 		if (isChat.length > 0) {
-			res.send(isChat[0]);
+			return res.status(200).json(isChat[0]);
 		} else {
 			var chatData = {
 				chatName: 'sender',
@@ -75,6 +77,28 @@ const fetchChats = async (req, res) => {
 		throw new Error(error.message);
 	}
 };
+const fetchGroupChats = async (req, res) => {
+	try {
+		Chat.find({
+			isGroupChat: true,
+			participants: { $elemMatch: { $eq: req.user._id } },
+		})
+			.populate('participants', '-password -isNewUser')
+			.populate('groupAdmin', '-password -isNewUser')
+			.populate('latestMessage')
+			.sort({ updatedAt: -1 })
+			.then(async (results) => {
+				results = await User.populate(results, {
+					path: 'latestMessage.sender',
+					select: 'name avatar email',
+				});
+				res.status(200).send(results);
+			});
+	} catch (error) {
+		res.status(400);
+		throw new Error(error.message);
+	}
+};
 
 //@description     Create New Group Chat
 //@route           POST /api/chat/group
@@ -84,13 +108,17 @@ const createGroupChat = async (req, res) => {
 		return res.status(400).send({ message: 'Please Fill all the feilds' });
 	}
 
-	// var participants = JSON.parse(req.body.participants);
-	var members = req.body.participants;
-	// Check if user is not sending himself as a participant. This will be done manually
-	if (members.includes(req.user._id.toString())) {
-		return res
-			.status(400)
-			.send('Participants array should not contain the group creator');
+	// var allParticipants = JSON.parse(req.body.participants);
+	console.log('participants =', req.user._id);
+	let members = req.body.participants;
+	
+	if (!members || members.length === 0) {
+		return res.status(400).send('Participants are required to create a group chat');
+	}
+
+	// Ensure members is an array
+	if (!Array.isArray(members)) {
+		return res.status(400).send('Participants must be an array of user IDs');
 	}
 
 	const participants = [...new Set([...members, req.user._id.toString()])]; // check for duplicates
@@ -102,6 +130,13 @@ const createGroupChat = async (req, res) => {
 	}
 
 	try {
+		//validate each participants
+		// const users = await User.find({ _id: { $in: participants } });
+		// if (users.length !== participants.length) {
+		// 	return res.status(400).send('One or more participants do not exist');
+		// }
+
+		// check if group already exists
 		const groupChat = await Chat.create({
 			chatName: req.body.name,
 			participants: participants,
@@ -239,9 +274,6 @@ const addToGroup = async (req, res) => {
 
 		const updatedChat = await Chat.findByIdAndUpdate(
 			groupId,
-			// {
-			// 	$push: { participants: [...uniqueMembers] },
-			// },
 			{
 				$push: { participants: { $each: uniqueMembers } },
 			},
@@ -258,7 +290,9 @@ const addToGroup = async (req, res) => {
 
 		return res.json(updatedChat);
 	} catch (error) {
-		res.status(400).send(error.message);
+		console.error('Error adding to group:', error);
+		// Handle the error appropriately
+		res.status(500).send(error.message);
 	}
 };
 
@@ -303,5 +337,6 @@ export {
 	renameGroup,
 	addToGroup,
 	removeFromGroup,
+	fetchGroupChats,
 	deleteGroup,
 };

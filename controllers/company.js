@@ -10,6 +10,7 @@ import Company from '../models/Company.js';
 import Subscription from '../models/Subscription.js';
 import Payroll from '../models/Payroll.js';
 import Ticket from '../models/Ticket.js';
+import Meeting from '../models/Meeting.js';
 import { generateUniqueCode } from '../utils/generateUniqueCode.js';
 import { hash, verifyHash } from '../utils/hash.js';
 export const getDashboard = async (req, res) => {
@@ -312,39 +313,6 @@ export const getPayroll = async (req, res) => {
 	}
 };
 
-export const createMeeting = async (req, res) => {
-	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
-	} catch (error) {
-		console.error('Error getting visitors:', error);
-		return res
-			.status(500)
-			.json({ error: error.message || 'Internal server error' });
-	}
-};
-export const getMeetings = async (req, res) => {
-	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
-	} catch (error) {
-		console.error('Error getting meetings:', error);
-		return res
-			.status(500)
-			.json({ error: error.message || 'Internal server error' });
-	}
-};
-export const getMeeting = async (req, res) => {
-	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
-	} catch (error) {
-		console.error('Error getting meetings:', error);
-		return res
-			.status(500)
-			.json({ error: error.message || 'Internal server error' });
-	}
-};
 export const getBoardRooms = async (req, res) => {
 	try {
 		const visitors = await Visitor.find({ companyId: req.params.companyId });

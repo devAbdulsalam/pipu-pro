@@ -17,6 +17,18 @@ export const getMeetings = async (req, res) => {
 	}
 };
 
+export const getMeeting = async (req, res) => {
+	try {
+		const meeting = await Meeting.find({ _id: req.params.companyId });
+		res.status(200).json(meeting);
+	} catch (error) {
+		console.error('Error getting meetings:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+
 export const getMyMeetings = async (req, res) => {
 	try {
 		const meeting = await Meeting.find({
@@ -36,7 +48,7 @@ export const updateMeeting = async (req, res) => {
 		const { title, description, date, time, duration, maxUsers } = req.body;
 		const meeting = await Meeting.findByIdAndUpdate(
 			req.params.id,
-			{ title, description, date, time, duration },
+			{ title, description, date, time, duration, maxUsers },
 			{ new: true }
 		);
 		if (!meeting) {
@@ -52,19 +64,26 @@ export const updateMeeting = async (req, res) => {
 };
 export const createMeeting = async (req, res) => {
 	try {
-		const { title, description, date, time, duration, maxUsers, participants } =
-			req.body;
-		const meetingId = generateUniqueCode(8);
+		const {
+			title,
+			description,
+			startTime,
+			date,
+			duration,
+			maxUsers,
+			participants,
+		} = req.body;
+		const meetingId = await generateUniqueCode(Meeting);
 		const newMeeting = new Meeting({
 			title,
 			description,
-			date,
 			maxUsers,
-			time,
+			date,
+			startTime,
 			duration,
 			participants,
 			meetingId,
-			companyId: req.params.companyId,
+			host: req.user._id,
 		});
 		await newMeeting.save();
 		res.status(201).json({
@@ -106,8 +125,7 @@ export const getMeetingById = async (req, res) => {
 
 export const joinMeeting = async (req, res) => {
 	try {
-		const { meetingId } = req.params;
-		const { userId } = req.body;
+		const { isAudioEnabled, isVideoEnabled, meetingId } = req.body;
 
 		// Check if the meeting exists
 		const meeting = await Meeting.findById(meetingId);
@@ -118,7 +136,8 @@ export const joinMeeting = async (req, res) => {
 		const existingMeeting = await Meeting.findOneAndUpdate(
 			{ meetingId },
 			{
-				$addToSet: { participants: userId },
+				$addToSet: { participants: req.user._id },
+				$addToSet: { users: {userId: req.user._id, isVideoEnabled, isAudioEnabled, name: req.user.name} },
 			},
 			{ new: true }
 		);
@@ -137,8 +156,10 @@ export const joinMeeting = async (req, res) => {
 
 export const addParticiants = async (req, res) => {
 	try {
-		const { meetingId } = req.params;
-		const { participants } = req.body;
+		const { participants, meetingId } = req.body;
+		if (!meetingId) {
+			return res.status(400).json({message: 'Meeting Id is required'})
+		}
 
 		const uniqueParticipants = [...new Set(participants)];
 
@@ -170,8 +191,10 @@ export const addParticiants = async (req, res) => {
 
 export const removeParticipant = async (req, res) => {
 	try {
-		const { meetingId } = req.params;
-		const { participantId } = req.body;
+		const { participantId, meetingId } = req.body;
+		if (!meetingId) {
+			return res.status(400).json({message: 'Meeting Id is required'})
+		}
 
 		// Check if the meeting exists
 		const meeting = await Meeting.findById(meetingId);
@@ -201,8 +224,11 @@ export const removeParticipant = async (req, res) => {
 
 export const leaveMeeting = async (req, res) => {
 	try {
-		const { meetingId } = req.params;
-		const { userId } = req.body;
+		const { meetingId } = req.body;
+		if (!meetingId) {
+			return res.status(400).json({message: 'Meeting Id is required'})
+		}
+		const userId  = req.user._id;
 
 		// Check if the meeting exists
 		const meeting = await Meeting.findById(meetingId);
@@ -231,10 +257,13 @@ export const leaveMeeting = async (req, res) => {
 
 export const getMeetingByCode = async (req, res) => {
 	try {
-		const { code } = req.params;
+		const { code  } = req.body;
+		if (!code) {
+			return res.status(400).json({message: 'Meeting code is required'})
+		}
 
 		// Check if the meeting exists
-		const meeting = await Meeting.findOne({ accessCode: code });
+		const meeting = await Meeting.findOne({ meetingId: code });
 		if (!meeting) {
 			return res.status(404).json({ message: 'Meeting not found' });
 		}

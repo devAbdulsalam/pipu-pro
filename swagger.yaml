@@ -2883,175 +2883,22 @@ paths:
             application/json:
               schema:
                 type: object
-  /company/meetings:
+  /company/boardrooms/{roomId}:
     get:
       tags:
         - 🏫 Company
-      summary: Get company meetings
+      summary: Get company boardrooms by roomId
       description: >-
-        The API endpoint allows you to retrieve the company meeting
-      operationId: getCompanyMeetings
-      responses:
-        '200':
-          description: Get company meetings
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '443'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:47 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '493'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '631'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-    post:
-      tags:
-        - 🏫 Company
-      summary: Create new meeting
-      description: >-
-        The API endpoint allows company to create new meeting.
-      operationId: createNewMeeting
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: john
-                phone:
-                  type: string
-                  example: '+234568908798'
-                email:
-                  type: string
-                  example: abc@gmail.com
-                maxTime:
-                  type: number
-                  example: 200000000
-                entryType:
-                  type: string
-                  enum: ['infinity', 'single', 'multiple']
-                  example: infinity
-                  description: infinity, single, multiple
-                expirationTime:
-                  type: string
-                  example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
-      responses:
-        '201':
-          description: New meeting Created
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '500'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:09 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '495'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '772'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                  message:
-                    type: string
-                    example: >-
-                      Meeting created successfully.
-  /company/meetings/{meetingId}:
-    get:
-      tags:
-        - 🏫 Company
-      summary: Get company meeting by Id
-      description: >-
-        The API endpoint allows you to retrieve the company meeting by id
-      operationId: getCompanyMeetingById
+        The API endpoint allows you to retrieve the company boardrooms by roomId
+      operationId: getCompanyBoadroomById
       parameters:
-        - name: meetingId
+        - name: roomId
           in: path
           required: true
-          description: The meeting ID
+          description: The room ID
       responses:
         '200':
-          description: Get company meeting by id
+          description: Get company room by id
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -3277,7 +3124,7 @@ paths:
     patch:
       tags:
         - 🏫 Company
-      summary: update ticket 
+      summary: update ticket
       description: >-
         The API endpoint allows admins to update ticket.
       operationId: update-ticket
@@ -3808,7 +3655,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object 
+                type: object
   /staff/meetings:
     get:
       tags:
@@ -3868,7 +3715,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object 
+                type: object
   /staff/attendance:
     get:
       tags:
@@ -4685,7 +4532,7 @@ paths:
     patch:
       tags:
         - 👨‍👩‍👧‍👦 Staff
-      summary: update ticket 
+      summary: update ticket
       description: >-
         The API endpoint allows staff to update ticket.
       operationId: update-ticket
@@ -4829,7 +4676,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object 
+                type: object
   /guest/visitor/registration:
     post:
       tags:
@@ -6497,13 +6344,13 @@ paths:
     get:
       tags:
         - 🔄 General
-      summary: Get meetings
+      summary: Get all meetings
       description: >-
-        The API endpoint allows you to retrieve the all your meeting
-      operationId: getMyMeetings
+        The API endpoint allows you to retrieve all meetings
+      operationId: getAllMeetings
       responses:
         '200':
-          description: Get my meetings
+          description: Get all meetings
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -6556,25 +6403,36 @@ paths:
     post:
       tags:
         - 🔄 General
-      summary: Join meeting
+      summary: Create new meeting
       description: >-
-        The API endpoint allows you to join a meeting.
-      operationId: joinMeeting
+        The API endpoint allows you create new meeting.
+      operationId: createNewMeeting
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                meetingId:
+                title:
                   type: string
-                  example: koinni990
-                microphone:
-                  type: boolean
-                  example: true
-                camera:
-                  type: boolean
-                  example: true
+                  example: monday meeting
+                description:
+                  type: string
+                  example: 'general meeting'
+                date:
+                  type: string
+                  example: '2025-07-28T06:42:26.247Z'
+                maxUsers:
+                  type: number
+                  example: 20
+                duration:
+                  type: number
+                  example: 200000000
+                participants:
+                  type: array
+                  items:
+                    type: string
+                    example: 680523ae6e97ead69d461bb3
       responses:
         '201':
           description: New meeting Created
@@ -6633,7 +6491,608 @@ paths:
                   message:
                     type: string
                     example: >-
+                      Meeting created successfully.
+  /meetings/my-meetings:
+    get:
+      tags:
+        - 🔄 General
+      summary: Get my meetings
+      description: >-
+        The API endpoint allows you to retrieve the all your meeting
+      operationId: getMyMeetings
+      responses:
+        '200':
+          description: Get my meetings
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /meetings/{meetingId}:
+    get:
+      tags:
+        - 🔄 General
+      summary: Get meeting by Id
+      description: >-
+        The API endpoint allows you to retrieve the meeting by id
+      operationId: getMeetingBycode
+      parameters:
+        - name: meetingId
+          in: path
+          required: true
+          description: The meeting ID
+      responses:
+        '200':
+          description: Get meeting by id
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+    patch:
+      tags:
+        - 🔄 General
+      summary: Updated meeting
+      description: >-
+        The API endpoint allows you update a meeting.
+      operationId: UpdateMeeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: monday meeting
+                description:
+                  type: string
+                  example: 'general meeting'
+                date:
+                  type: string
+                  example: '2025-07-28T06:42:26.247Z'
+                maxUsers:
+                  type: number
+                  example: 20
+                duration:
+                  type: number
+                  example: 200000000
+      responses:
+        '201':
+          description: Meeting Updated
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Meeting updated successfully.
+  /meetings/code:
+    get:
+      tags:
+        - 🔄 General
+      summary: Get meeting by code
+      description: >-
+        The API endpoint allows you to retrieve the meeting by code
+      operationId: getMeetingBycode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: J1L0jAj
+      responses:
+        '200':
+          description: Get meeting by code
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /meetings/join:
+    post:
+      tags:
+        - 🔄 General
+      summary: Join meeting
+      description: >-
+        The API endpoint allows you to join a meeting.
+      operationId: joinMeeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meetingId:
+                  type: string
+                  example: koinni990
+                isAudioEnabled:
+                  type: boolean
+                  example: true
+                isVideoEnabled:
+                  type: boolean
+                  example: true
+      responses:
+        '201':
+          description: Join meeting
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
                       Meeting joined successfully.
+  /meetings/add-participants:
+    post:
+      tags:
+        - 🔄 General
+      summary: Add participants to meeting
+      description: >-
+        The API endpoint allows you to add participants to a meeting.
+      operationId: addParticipantsToMeeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meetingId:
+                  type: string
+                  example: koinni990
+                participants:
+                  type: array
+                  items:
+                    type: string
+                    example: 680523ae6e97ead69d461bb3
+      responses:
+        '201':
+          description: add participants to meeting
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Meeting joined successfully.
+  /meetings/remove-participants:
+    post:
+      tags:
+        - 🔄 General
+      summary: remove participants from meeting
+      description: >-
+        The API endpoint allows you to remove participants from a meeting.
+      operationId: RemoveParticipantsFromMeeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meetingId:
+                  type: string
+                  example: koinni990
+                participants:
+                  type: array
+                  items:
+                    type: string
+                    example: 680523ae6e97ead69d461bb3
+      responses:
+        '201':
+          description: remove participants from meeting
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Meeting joined successfully.
+  /meetings/leave:
+    post:
+      tags:
+        - 🔄 General
+      summary: Leave meeting
+      description: >-
+        The API endpoint allows you to leave a meeting.
+      operationId: LeaveMeeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meetingId:
+                  type: string
+                  example: koinni990
+      responses:
+        '201':
+          description: Leave meeting
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Leave meeting successfully.
   /chats:
     get:
       tags:
@@ -6697,25 +7156,19 @@ paths:
     post:
       tags:
         - 🔄 General
-      summary: Join chats
+      summary: Create chat
       description: >-
-        The API endpoint allows you to join a chats.
-      operationId: joinchats
+        The API endpoint allows you to create chat between two people.
+      operationId: createChat
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                meetingId:
+                userId:
                   type: string
-                  example: koinni990
-                microphone:
-                  type: boolean
-                  example: true
-                camera:
-                  type: boolean
-                  example: true
+                  example: 681e2429c5421ead94648571
       responses:
         '201':
           description: New chats Created
@@ -6774,7 +7227,456 @@ paths:
                   message:
                     type: string
                     example: >-
-                      chats joined successfully.
+                      chat created successfully.
+  /chats/group:
+    get:
+      tags:
+        - 🔄 General
+      summary: Get chats
+      description: >-
+        The API endpoint allows you to retrieve the all group chats
+      operationId: getGroupChats
+      responses:
+        '200':
+          description: Get group chats
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+        - 🔄 General
+      summary: Create Group chat
+      description: >-
+        The API endpoint allows you to create group chat between two people.
+      operationId: createGroupChat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: admin group
+                participants:
+                  type: array
+                  items:
+                    type: string
+                    example: 680523ae6e67ead69d4koib3
+      responses:
+        '201':
+          description: New group chat Created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Group chat created successfully.
+  /chats/group/add:
+    post:
+      tags:
+        - 🔄 General
+      summary: Add member to group chat
+      description: >-
+        The API endpoint allows you to add member to group chat.
+      operationId: AddToGroupChat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                members:
+                  type: array
+                  items:
+                    type: string
+                    example:
+                      - 680523ae6e67ead69d4koib3
+                      - 680523ae6e97ead69d4koib3
+                      - 680523ae6e97ead69d461bb3
+      responses:
+        '201':
+          description: Add member to group chat
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      members added successfully.
+  /chats/group/remove:
+    post:
+      tags:
+        - 🔄 General
+      summary: Add user to group chat
+      description: >-
+        The API endpoint allows you to Add user to group chat.
+      operationId: AddUserToGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                userId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+      responses:
+        '201':
+          description: Add user to group
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      user removed successfully.
+  /chats/group/rename:
+    post:
+      tags:
+        - 🔄 General
+      summary: Update group chat name
+      description: >-
+        The API endpoint allows you to update group chat name.
+      operationId: updateChatName
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatName:
+                  type: string
+                  example: admin group
+                chatId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+      responses:
+        '201':
+          description: update group chat name
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      chat created successfully.
+  /chats/{chatId}:
+    delete:
+      tags:
+        - 🔄 General
+      summary: delete chat
+      description: >-
+        The API endpoint allows you to delete chat between two people.
+      operationId: deleteChat
+      responses:
+        '201':
+          description: Chats deleted
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      chat created successfully.
   /messages/{chatId}:
     get:
       tags:
@@ -6782,7 +7684,7 @@ paths:
       summary: Get messages
       description: >-
         The API endpoint allows you to retrieve the all messages by chat id
-      operationId: getMyMeetings
+      operationId: getChatMessages
       parameters:
         - name: chatId
           in: path
@@ -6857,12 +7759,9 @@ paths:
                 meetingId:
                   type: string
                   example: koinni990
-                microphone:
-                  type: boolean
-                  example: true
-                camera:
-                  type: boolean
-                  example: true
+                message:
+                  type: string
+                  example: Hello, how are you?
       responses:
         '201':
           description: New message sent

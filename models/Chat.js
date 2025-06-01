@@ -19,10 +19,9 @@ const ChatSchema = new Schema(
 			type: Schema.Types.ObjectId,
 			ref: 'Message',
 		},
-		admin: {
+		groupAdmin: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
-			required: true,
 		},
 		participants: [
 			{
