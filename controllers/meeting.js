@@ -178,11 +178,11 @@ export const addParticiants = async (req, res) => {
 		);
 
 		res.status(200).json({
-			message: 'User joined the meeting successfully',
+			message: 'User added to the meeting successfully',
 			meeting: existingMeeting,
 		});
 	} catch (error) {
-		console.error('Error joining meeting:', error);
+		console.error('Error adding user to the meeting:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -211,11 +211,11 @@ export const removeParticipant = async (req, res) => {
 		);
 
 		res.status(200).json({
-			message: 'User joined the meeting successfully',
+			message: 'User removed from meeting successfully',
 			meeting: existingMeeting,
 		});
 	} catch (error) {
-		console.error('Error joining meeting:', error);
+		console.error('Error removing user from meeting:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });

@@ -1,4 +1,4 @@
-import {app, io} from '../index.js';
+import { app, io } from '../index2.js';
 import { v4 as uuidv4 } from 'uuid';
 import Meeting from '../models/Meeting.js';
 

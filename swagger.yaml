@@ -1929,6 +1929,90 @@ paths:
                     type: string
                     example: >-
                       Company added successfully.
+    patch:
+      tags:
+        - 🏫 Company
+      summary: update Company
+      description: >-
+        The API endpoint allows company update their profile.
+      operationId: updateCompany
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Veek Design
+                email:
+                  type: string
+                  example: 'olivia@gmail.com'
+                country:
+                  type: string
+                  example: 'Nigeria'
+                timezone:
+                  type: string
+                  example: 'Pacific standard time'
+      responses:
+        '201':
+          description: Company updated
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company updated successfully.
   /company/dashboard:
     get:
       tags:
@@ -1989,6 +2073,1217 @@ paths:
             application/json:
               schema:
                 type: object
+  /company/roles:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company roles
+      description: >-
+        The API endpoint allows you to retrieve the company roles
+      operationId: getCompanyRoles
+      responses:
+        '200':
+          description: Get company roles
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object    
+    post:
+      tags:
+        - 🏫 Company
+      summary: Add new role
+      description: >-
+        The API endpoint allows company add role.
+      operationId: addNewRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: john
+                description:
+                  type: string
+                  example: '+234568908798'
+                permissions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: manageProfile
+                      isAllowed:
+                        type: boolean
+                        example: true
+      responses:
+        '201':
+          description: New Company created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company added successfully.
+    patch:
+      tags:
+        - 🏫 Company
+      summary: update Company role
+      description: >-
+        The API endpoint allows company update role.
+      operationId: updateCompanyRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roleId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: john
+                description:
+                  type: string
+                  example: '+234568908798'
+                permissions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: manageProfile
+                      isAllowed:
+                        type: boolean
+                        example: true
+      responses:
+        '201':
+          description: Updated role
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company updated role successfully.
+  /company/roles/{roleId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company role bu id
+      description: >-
+        The API endpoint allows you to retrieve the company role by id
+      operationId: getCompanyRole
+      parameters:
+        - name: roleId
+          in: path
+          required: true
+          description: The role id
+      responses:
+        '200':
+          description: Get company role
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /company/departments/categories:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company departments categories
+      description: >-
+        The API endpoint allows you to retrieve the company departments categories
+      operationId: getCompanyDepartmentsCategories
+      responses:
+        '200':
+          description: Get company departments categories
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object    
+    post:
+      tags:
+        - 🏫 Company
+      summary: Add new department category
+      description: >-
+        The API endpoint allows company add new department category.
+      operationId: addNewDepartmentCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Marketing
+                companyId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+      responses:
+        '201':
+          description: New department category created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      New department category added successfully.
+    patch:
+      tags:
+        - 🏫 Company
+      summary: update Company new department category
+      description: >-
+        The API endpoint allows company update department category.
+      operationId: updateCompanyDepartmentCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categoryId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: Finance
+      responses:
+        '201':
+          description: Updated department category
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company updated department successfully.
+  /company/departments/categories/{categoryId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company department category by id
+      description: >-
+        The API endpoint allows you to retrieve the company department category by id
+      operationId: getCompanyDepartmentCategoryById
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: The category id
+      responses:
+        '200':
+          description: Get company department category
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /company/departments:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company departments
+      description: >-
+        The API endpoint allows you to retrieve the company departments
+      operationId: getCompanydepartments
+      responses:
+        '200':
+          description: Get company departments
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object    
+    post:
+      tags:
+        - 🏫 Company
+      summary: Add new department
+      description: >-
+        The API endpoint allows company add new department.
+      operationId: addNewDepartment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: john
+                categoryId:
+                  type: string
+                  example: '681e2429c5421ead946571'
+                minSalary:
+                  type: string
+                  example: '7000'
+                maxSalary:
+                  type: string
+                  example: '7000'
+                overTimeRate:
+                  type: string
+                  example: '7000'
+                workDays:
+                  type: string
+                  example: '5'
+                workModel:
+                  type: string
+                  example: 'onsite'
+      responses:
+        '201':
+          description: New department created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Department added successfully.
+    patch:
+      tags:
+        - 🏫 Company
+      summary: update Company department
+      description: >-
+        The API endpoint allows company update department.
+      operationId: updateCompanyDepartment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                departmentId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: john
+                categoryId:
+                  type: string
+                  example: '681e2429c5421ead946571'
+                minSalary:
+                  type: string
+                  example: '7000'
+                maxSalary:
+                  type: string
+                  example: '7000'
+                overTimeRate:
+                  type: string
+                  example: '7000'
+                workDays:
+                  type: string
+                  example: '5'
+                workModel:
+                  type: string
+                  example: 'onsite'
+      responses:
+        '201':
+          description: Updated department
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company updated department successfully.
+  /company/departments/{departmentId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company department by id
+      description: >-
+        The API endpoint allows you to retrieve the company department by id
+      operationId: getCompanyDepartmentById
+      parameters:
+        - name: departmentId
+          in: path
+          required: true
+          description: The department id
+      responses:
+        '200':
+          description: Get company department
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /company/policy:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company policy
+      description: >-
+        The API endpoint allows you to retrieve the company policy
+      operationId: getCompanypolicy
+      responses:
+        '200':
+          description: Get company policy
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object    
+    post:
+      tags:
+        - 🏫 Company
+      summary: update company policy
+      description: >-
+        The API endpoint allows company update policy.
+      operationId: updateCompanyPolicy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: john
+                description:
+                  type: string
+                  example: '+234568908798'
+                permissions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: manageProfile
+                      isAllowed:
+                        type: boolean
+                        example: true
+      responses:
+        '201':
+          description: New Company created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company added successfully.
+  /company/financial-policy:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company financial policy
+      description: >-
+        The API endpoint allows you to retrieve the company financial policy
+      operationId: getCompanyfinancial-policy
+      responses:
+        '200':
+          description: Get company financial policy
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object    
+    post:
+      tags:
+        - 🏫 Company
+      summary: Update financial policy
+      description: >-
+        The API endpoint allows company update financial policy.
+      operationId: updateFinancialPolicy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                name:
+                  type: string
+                  example: john
+                description:
+                  type: string
+                  example: '+234568908798'
+                permissions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: manageProfile
+                      isAllowed:
+                        type: boolean
+                        example: true
+      responses:
+        '201':
+          description: New Company created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Company added successfully.
   /company/staffs:
     get:
       tags:
@@ -6559,7 +7854,7 @@ paths:
       summary: Get meeting by Id
       description: >-
         The API endpoint allows you to retrieve the meeting by id
-      operationId: getMeetingBycode
+      operationId: getMeetingById
       parameters:
         - name: meetingId
           in: path
@@ -6936,14 +8231,14 @@ paths:
                     type: string
                     example: >-
                       Meeting joined successfully.
-  /meetings/remove-participants:
+  /meetings/remove-participant:
     post:
       tags:
         - 🔄 General
-      summary: remove participants from meeting
+      summary: remove participant from meeting
       description: >-
-        The API endpoint allows you to remove participants from a meeting.
-      operationId: RemoveParticipantsFromMeeting
+        The API endpoint allows you to remove participant from a meeting.
+      operationId: RemoveParticipantFromMeeting
       requestBody:
         content:
           application/json:
@@ -6952,15 +8247,13 @@ paths:
               properties:
                 meetingId:
                   type: string
-                  example: koinni990
-                participants:
-                  type: array
-                  items:
-                    type: string
-                    example: 680523ae6e97ead69d461bb3
+                  example: 683c417a844b0fd86c3d2827
+                participantId:
+                  type: string
+                  example: 680523ae6e97ead69d461bb3
       responses:
         '201':
-          description: remove participants from meeting
+          description: remove participant from meeting
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -7016,7 +8309,7 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Meeting joined successfully.
+                      participant removed successfully.
   /meetings/leave:
     post:
       tags:
@@ -7033,7 +8326,7 @@ paths:
               properties:
                 meetingId:
                   type: string
-                  example: koinni990
+                  example: 683c417a844b0fd86c3d2829
       responses:
         '201':
           description: Leave meeting
@@ -7389,10 +8682,7 @@ paths:
                   type: array
                   items:
                     type: string
-                    example:
-                      - 680523ae6e67ead69d4koib3
-                      - 680523ae6e97ead69d4koib3
-                      - 680523ae6e97ead69d461bb3
+                    example: 680523ae6e67ead69d4koib3
       responses:
         '201':
           description: Add member to group chat
@@ -7756,10 +9046,10 @@ paths:
             schema:
               type: object
               properties:
-                meetingId:
+                chatId:
                   type: string
-                  example: koinni990
-                message:
+                  example: 683c89c87f16c6acb1ca3d84
+                content:
                   type: string
                   example: Hello, how are you?
       responses:

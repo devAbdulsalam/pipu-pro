@@ -20,7 +20,7 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import guestRoutes from './routes/guestRoutes.js';
 import pipuproRoutes from './routes/pipuproRoutes.js';
-import companyRoutes from './routes/companyRoutes.js';
+import companyRoutes from './routes/company/index.js';
 import staffRoutes from './routes/staffRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';

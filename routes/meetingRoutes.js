@@ -26,8 +26,8 @@ router.get('/:id', requireAuth, getMeetingById);
 router.patch('/:id', requireAuth, updateMeeting);        
 router.post('/join', requireAuth, joinMeeting);
 router.post('/leave', requireAuth, leaveMeeting);
-router.post('/add-participant', requireAuth, addParticiants);
-router.post('/remove-participant', requireAuth, removeParticipant);
+router.post('/add-participants', requireAuth, addParticiants);
+router.post('/remove-participants', requireAuth, removeParticipant);
 router.delete('/:id', requireAuth, deleteMeeting);
 
 export default router;

@@ -22,7 +22,7 @@ router.get('/group', requireAuth, fetchGroupChats);
 router.post('/group', requireAuth, createGroupChat);
 router.post('/group/add', requireAuth, addToGroup);
 router.post('/group/remove', requireAuth, removeFromGroup);
-router.put('/group/rename',requireAuth, renameGroup);
+router.post('/group/rename',requireAuth, renameGroup);
 router.delete('/:chatId', requireAuth, deleteGroup);
 // router.route('/').delete(requireAuth, deleteGroup);
 

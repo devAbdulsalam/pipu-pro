@@ -7,11 +7,12 @@ import ChatMessage from './../models/ChatMessage.js';
 //@access          Protected
 const allMessages = async (req, res) => {
 	try {
-		const messages = await ChatMessage.find({ chat: req.params.chatId })
+		const messages = await ChatMessage.find({ chatId: req.params.chatId })
 			.populate('sender', 'name avatar email')
-			.populate('chat');
+			.populate('chatId');
 		res.status(200).json(messages);
 	} catch (error) {
+		console.error('Error fetching messages:', error);
 		res.status(400).json({ error: error.message });
 	}
 };
@@ -20,7 +21,7 @@ const allMessages = async (req, res) => {
 //@route           POST /api/Message/
 //@access          Protected
 const sendMessage = async (req, res) => {
-	const { content, chatId, msgType } = req.body;
+	const { content, chatId } = req.body;
 
 	if (!content || !chatId) {
 		// console.log('Invalid data passed into request');
@@ -30,14 +31,13 @@ const sendMessage = async (req, res) => {
 	var newMessage = {
 		sender: req.user._id,
 		content: content,
-		chat: chatId,
-		msgType,
+		chatId,
 	};
 
 	try {
 		var message = await ChatMessage.create(newMessage);
 		message = await message.populate('sender', 'name avatar');
-		message = await message.populate('chat');
+		message = await message.populate('chatId');
 		message = await User.populate(message, {
 			path: 'chat.participants',
 			select: 'name avatar email',
@@ -47,9 +47,9 @@ const sendMessage = async (req, res) => {
 
 		res.status(200).json(message);
 	} catch (error) {
-		res.status(400).json({ error: error.message });
+		console.error('Error sending message:', error);
+		res.status(500).json({ error: error.message });
 	}
 };
 
 export { allMessages, sendMessage };
-// https://github.com/devAbdulsalam/Kudinkaapp.git

@@ -10,6 +10,7 @@ const ChatMessageSchema = new Schema(
 		},
 		content: {
 			type: String,
+			required: true,
 		},
 		attachments: {
 			type: [
@@ -20,15 +21,11 @@ const ChatMessageSchema = new Schema(
 			],
 			default: [],
 		},
-		msgType: {
-			type: String,
-			enum: ['msg', 'trans', 'noti', 'ctrb'],
-			default: 'msg',
-		},
 		readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-		chat: {
+		chatId: {
 			type: Schema.Types.ObjectId,
 			ref: 'Chat',
+			required: true,
 		},
 	},
 	{

@@ -9,6 +9,20 @@ const CompanySchema = new Schema({
 	},
 	name: { type: String, required: true },
 	email: { type: String, required: true, unique: true },
+	country: {
+		type: String,
+	},
+	timezone: {
+		type: String,
+	},
+	logo: {
+		public_id: {
+			type: String,
+		},
+		url: {
+			type: String,
+		},
+	},
 });
 
 const Company = mongoose.model('Company', CompanySchema);
