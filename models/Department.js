@@ -27,8 +27,14 @@ const DepartmentSchema = new Schema(
 		overTimeRate: {
 			type: String,
 		},
+		geoClockIn: {
+			type: Boolean,
+			default: false,
+		},
 		workModel: {
 			type: String,
+			default: 'onsite',
+			enum: ['onsite', 'hybrid', 'remote'],
 		},
 		workDays: {
 			type: String,

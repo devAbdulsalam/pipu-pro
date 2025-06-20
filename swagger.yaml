@@ -2321,7 +2321,7 @@ paths:
     get:
       tags:
         - 🏫 Company
-      summary: Get company role bu id
+      summary: Get company role by id
       description: >-
         The API endpoint allows you to retrieve the company role by id
       operationId: getCompanyRole

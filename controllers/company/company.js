@@ -114,7 +114,7 @@ export const createCompany = async (req, res) => {
 };
 export const updateCompany = async (req, res) => {
 	try {
-		const { id } = req.params;
+		const id = req.company._id;
 		const { email } = req.body;
 		const IsCompany = await Company.findOne({
 			_id: { $ne: id },
@@ -127,10 +127,14 @@ export const updateCompany = async (req, res) => {
 			return res.status(409).json({ error: 'Email Address already Exists' });
 		}
 		// write login to update the user and company, ensure the
-		const company = await Company.findByIdAndUpdate(req.params.id, req.body, {
-			new: true,
-		});
-		res.status(200).json(company);
+		const company = await Company.findByIdAndUpdate(
+			{ _id: id },
+			{ ...req.body },
+			{
+				new: true,
+			}
+		);
+		res.status(200).json({ company, message: 'Company updated successfully' });
 	} catch (error) {
 		console.error('Error updating company:', error);
 		return res
@@ -143,7 +147,7 @@ export const getRoles = async (req, res) => {
 	try {
 		const company = req.company;
 		const roles = await CompanyRole.find({
-			companyId: company.companyId,
+			companyId: company._id,
 		});
 
 		res.status(200).json(roles);
@@ -160,7 +164,7 @@ export const getRole = async (req, res) => {
 		const role = await CompanyRole.findById({
 			_id: req.params.id,
 		});
-		if (role) {
+		if (!role) {
 			return res.status(409).json({ message: 'Role not found!' });
 		}
 
