@@ -27,6 +27,7 @@ import meetingRoutes from './routes/meetingRoutes.js';
 import boardRoomRoutes from './routes/staffRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import generalRoutes from './routes/generalRoutes.js';
+// import  './crons/index.js';
 
 // setups
 const __filename = fileURLToPath(import.meta.url);
@@ -131,6 +132,7 @@ app.use(
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 	console.log(`Health check: http://localhost:${PORT}/api/health`);
+
 });
 
 // Graceful shutdown

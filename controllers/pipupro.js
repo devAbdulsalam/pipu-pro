@@ -1,7 +1,8 @@
 import Subscription from '../models/Subscription.js';
 import User from '../models/User.js';
 import Visitor from '../models/Visitor.js';
-import Company from '../models/Company.js';
+import Role from '../models/Role.js';
+import Admin from '../models/Admin.js';
 // import Staff from '../models/Staff.js';
 // import Guest from '../models/Guest.js';
 import Transaction from '../models/Transactions.js';
@@ -47,6 +48,108 @@ export const getAccounts = async (req, res) => {
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getAdmins = async (req, res) => {
+	try {
+		const admins = await User.find({ role: 'ADMIN' })
+			.sort({ createdAt: -1 })
+			.select('-password');
+
+		res.status(200).json(admins);
+	} catch (error) {
+		console.error('Error getting admins:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getApprovals = async (req, res) => {
+	try {
+		const admins = await User.find({ role: 'admin' })
+			.sort({ createdAt: -1 })
+			.select('-password');
+
+		res.status(200).json(admins);
+	} catch (error) {
+		console.error('Error getting approvals:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getConflictTickets = async (req, res) => {
+	try {
+		const admins = await User.find({ role: 'admin' })
+			.sort({ createdAt: -1 })
+			.select('-password');
+
+		res.status(200).json(admins);
+	} catch (error) {
+		console.error('Error getting tickets:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+
+export const addAdmin = async (req, res) => {
+	const session = await mongoose.startSession();
+
+	try {
+		const { name, email, position, password } = req.body;
+
+		session.startTransaction();
+
+		const existingUser = await User.findOne({ email }).session(session);
+		if (existingUser) {
+			await session.abortTransaction();
+			return res.status(409).json({ error: 'Email address already exists' });
+		}
+
+		const hashedPassword = await hash(password, 10);
+
+		const user = await User.create(
+			[
+				{
+					name,
+					email,
+					password: hashedPassword,
+					role: 'ADMIN',
+				},
+			],
+			{ session }
+		);
+
+		const admin = await Admin.create(
+			[
+				{
+					userId: user[0]._id,
+					name,
+					email,
+					position,
+				},
+			],
+			{ session }
+		);
+
+		await session.commitTransaction();
+		session.endSession();
+
+		user[0].password = undefined;
+
+		res.status(200).json({
+			admin: staff[0],
+			user: user[0],
+			statusCode: 200,
+			success: true,
+			message: 'Admin added successfully',
+		});
+	} catch (error) {
+		await session.abortTransaction();
+		session.endSession();
+		console.error('Error adding admin:', error);
+		res.status(500).json({ error: error.message || 'Internal server error' });
 	}
 };
 export const getFinances = async (req, res) => {
@@ -147,3 +250,64 @@ export const updateSubscriptionPrices = async (req, res) => {
 	}
 };
 
+export const getRoles = async (req, res) => {
+	try {
+		const roles = await Role.find();
+
+		res.status(200).json(roles);
+	} catch (error) {
+		console.error('Error getting roles:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+
+export const getRole = async (req, res) => {
+	try {
+		const role = await Role.findById({
+			_id: req.params.id,
+		});
+		if (role) {
+			return res.status(409).json({ message: 'Role not found!' });
+		}
+
+		res.status(200).json(role);
+	} catch (error) {
+		console.error('Error finding role:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const addRole = async (req, res) => {
+	try {
+		const role = await Role.create({ ...req.body });
+
+		res.status(200).json(role);
+	} catch (error) {
+		console.error('Error creating role:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+
+export const updateRole = async (req, res) => {
+	try {
+		const role = await Role.findByIdAndUpdate(
+			{ _id: req.body.roleId },
+			req.params.id,
+			req.body,
+			{
+				new: true,
+			}
+		);
+		res.status(200).json(role);
+	} catch (error) {
+		console.error('Error updating role:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
