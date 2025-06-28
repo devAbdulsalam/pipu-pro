@@ -2741,7 +2741,7 @@ paths:
                   example: '681e2429c5421ead94648571'
                 name:
                   type: string
-                  example: john
+                  example: Marketing
                 categoryId:
                   type: string
                   example: '681e2429c5421ead946571'
@@ -2837,7 +2837,7 @@ paths:
                   example: '681e2429c5421ead94648571'
                 name:
                   type: string
-                  example: john
+                  example: Accouting
                 categoryId:
                   type: string
                   example: '681e2429c5421ead946571'
@@ -3056,26 +3056,59 @@ paths:
                 companyId:
                   type: string
                   example: '681e2429c5421ead94648571'
-                name:
-                  type: string
-                  example: john
-                description:
-                  type: string
-                  example: '+234568908798'
-                permissions:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                        example: manageProfile
-                      isAllowed:
-                        type: boolean
-                        example: true
+                absence:
+                  type: object
+                  properties:
+                    enabledForUnapprovedAbsence:
+                      type: boolean
+                      example: true
+                    consequence:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: '+234568908798'
+                    deductionType:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: '+234568908798'
+                lateComing:
+                  type: object
+                  properties:
+                    lateAfter:
+                      type: string
+                      example: 3
+                    gracePerMonth:
+                      type: string
+                      example: 3
+                    enabledPolicy:
+                      type: boolean
+                      example: true
+                    consequence:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'payment'
+                    deductionType:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'payment'
       responses:
         '201':
-          description: New Company created
+          description: New Company policy added
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -5308,10 +5341,19 @@ paths:
                   type: string
                   example: '681e2429c5421ead94648571'
                   description: '681e2429c5421ead94648571'
-                checkIn:
+                title:
                   type: string
-                  example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
+                  example: 'Leave request'
+                description:
+                  type: string
+                  example: 'off for matrimial leave '
+                days:
+                  type: string
+                  example: '4'
+                  description: 'total days of leave'
+                startDate:
+                  type: string
+                  example: '2025-06-28T06:42:26.247Z'
       responses:
         '201':
           description: New leave request Created
@@ -5384,14 +5426,23 @@ paths:
             schema:
               type: object
               properties:
-                companyId:
+                leaveId:
                   type: string
                   example: '681e2429c5421ead94648571'
                   description: '681e2429c5421ead94648571'
-                checkIn:
+                title:
                   type: string
-                  example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
+                  example: 'Leave request'
+                description:
+                  type: string
+                  example: 'off for matrimial leave '
+                days:
+                  type: string
+                  example: '4'
+                  description: 'total days of leave'
+                startDate:
+                  type: string
+                  example: '2025-06-28T06:42:26.247Z'
       responses:
         '201':
           description: Update Leave request
@@ -5451,7 +5502,7 @@ paths:
                     type: string
                     example: >-
                       Leave request updated successfully.
-  /staff/task:
+  /staff/tasks:
     get:
       tags:
         - 👨‍👩‍👧‍👦 Staff
@@ -5528,10 +5579,24 @@ paths:
                   type: string
                   example: '681e2429c5421ead94648571'
                   description: '681e2429c5421ead94648571'
-                checkIn:
+                ticketId:
+                  type: string
+                  example: '681e2429c5421ead94648524Z'
+                title:
+                  type: string
+                  example: 'shortlist candidates'
+                description:
+                  type: string
+                  example: 'shortlist candidates for the interview'
+                dueDate:
                   type: string
                   example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
+                  description: '2025-07-30T06:42:26.247Z'
+                assignedTo:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
       responses:
         '201':
           description: New task Created
@@ -5608,10 +5673,24 @@ paths:
                   type: string
                   example: '681e2429c5421ead94648571'
                   description: '681e2429c5421ead94648571'
-                checkIn:
+                ticketId:
+                  type: string
+                  example: '681e2429c5421ead94648524Z'
+                title:
+                  type: string
+                  example: 'shortlist candidates'
+                description:
+                  type: string
+                  example: 'shortlist candidates for the interview'
+                dueDate:
                   type: string
                   example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
+                  description: '2025-07-30T06:42:26.247Z'
+                assignedTo:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
       responses:
         '201':
           description: Update staff task
@@ -5744,27 +5823,46 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                title:
                   type: string
                   example: john
-                phone:
+                type:
                   type: string
                   example: '+234568908798'
-                email:
+                createdBy:
                   type: string
-                  example: abc@gmail.com
-                maxTime:
-                  type: number
-                  example: 200000000
-                entryType:
+                  example: '681e2429c5421ead94648571'
+                companyId:
                   type: string
-                  enum: ['infinity', 'single', 'multiple']
-                  example: infinity
-                  description: infinity, single, multiple
-                expirationTime:
+                  example: '681e2429c5421ead94648571'
+                  description: '681e2429c5421ead94648571'
+                tasks:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
+                clients:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
+                assignedTo:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
+                message:
                   type: string
-                  example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
+                  example: 'Interview with john'
+                  description: 'Interview with john'
+                tags:
+                  type: [string]
+                  example: 'interview'
+                  description: 'Interview'
+                status:
+                  type: string
+                  example: 'pending'
+                  description: 'pending'
       responses:
         '201':
           description: New ticket Created
@@ -5837,17 +5935,46 @@ paths:
             schema:
               type: object
               properties:
-                plans:
+                title:
+                  type: string
+                  example: john
+                type:
+                  type: string
+                  example: '+234568908798'
+                createdBy:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                companyId:
+                  type: string
+                  example: '681e2429c5421ead94648571'
+                  description: '681e2429c5421ead94648571'
+                tasks:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                        example: 680523ae6e97ead69d461bb3
-                      price:
-                        type: string
-                        example: 3000
+                    type: string
+                    example: '681e2429c5421ead94648571'
+                clients:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
+                assignedTo:
+                  type: array
+                  items:
+                    type: string
+                    example: '681e2429c5421ead94648571'
+                message:
+                  type: string
+                  example: 'Interview with john'
+                  description: 'Interview with john'
+                tags:
+                  type: [string]
+                  example: 'interview'
+                  description: 'Interview'
+                status:
+                  type: string
+                  example: 'pending'
+                  description: 'pending'
       responses:
         '201':
           description: update ticket

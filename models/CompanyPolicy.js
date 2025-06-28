@@ -7,7 +7,6 @@ const CompanyPolicySchema = new Schema(
 			ref: 'Company',
 			required: true,
 		},
-		name: { type: String, required: true },
 		absence: {
 			consequence: [
 				{

@@ -15,6 +15,7 @@ const TicketSchema = new Schema({
 	title: { type: String, required: true },
 	type: { type: String },
 	clients: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+	tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }],
 	message: { type: String },
 	assignedTo: [
 		{ type: Schema.Types.ObjectId, ref: 'Employee', required: true },

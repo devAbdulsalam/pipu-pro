@@ -47,12 +47,13 @@ export const getDashboard = async (req, res) => {
 
 export const createCompany = async (req, res) => {
 	try {
+		const session = await mongoose.startSession();
 		const { name, phone, email, password } = req.body;
 
-		await session.commitTransaction();
-		session.endSession();
-
-		user[0].password = undefined;
+		if (!name || !phone || !email || !password) {
+			return res.status(400).json({ error: 'All fields are required' });
+		}
+		session.startTransaction();
 		const isComapny = await Company.findOne({ name: name });
 		if (isComapny) {
 			await session.abortTransaction();
@@ -84,7 +85,7 @@ export const createCompany = async (req, res) => {
 		const company = await Company.create(
 			[
 				{
-					userId: user._id,
+					userId: user[0]._id,
 					name,
 					email,
 					status: 'inactive',
@@ -286,7 +287,7 @@ export const addStaff = async (req, res) => {
 };
 export const getStaffs = async (req, res) => {
 	try {
-		const company = await Company.findOne({ userId: req.user._id });
+		const company = req.company;
 		if (!company) {
 			return res.status(404).json({ message: 'Company not found' });
 		}
@@ -316,7 +317,8 @@ export const getStaff = async (req, res) => {
 
 export const getLeaves = async (req, res) => {
 	try {
-		const leaves = await Leave.find({ companyId: req.params.companyId });
+		const company = req.company;
+		const leaves = await Leave.find({ companyId: company._id });
 		res.status(200).json(leaves);
 	} catch (error) {
 		console.error('Error getting leaves:', error);
@@ -351,8 +353,7 @@ export const getBoardRooms = async (req, res) => {
 
 export const getTickets = async (req, res) => {
 	try {
-		const companyId = '681e2429c5421ead94648571';
-		// const companyId = req.user._id;
+		const companyId = req.company._id;
 		const tickets = await Ticket.find({ companyId });
 		res.status(200).json(tickets);
 	} catch (error) {

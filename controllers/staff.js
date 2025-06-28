@@ -15,24 +15,23 @@ import { generateUniqueCode } from '../utils/generateUniqueCode.js';
 
 export const getDashboard = async (req, res) => {
 	try {
-		const [totalHost, totalVisitors, activeStaff, staffLog] = await Promise.all(
-			[
-				Visitor.countDocuments({ ownerId: req.user._id }),
-				Visitor.countDocuments({ ownerId: req.user._id }),
-				Visitor.countDocuments({ ownerId: req.user._id, status: 'active' }),
+		const [totalWorkDays, totalTasksCompleted, pendingTasks, latestTasks] =
+			await Promise.all([
+				Attendance.countDocuments({ ownerId: req.user._id, status: 'active' }),
+				Task.countDocuments({ ownerId: req.user._id }),
+				Task.countDocuments({ ownerId: req.user._id }),
 				Activity.find({ ownerId: req.user._id })
 					.sort({ createdAt: -1 })
 					.limit(50),
-			]
-		);
+			]);
 		res.status(200).json({
-			totalHost,
-			activeStaff,
-			totalVisitors,
-			staffLog,
+			totalWorkDays,
+			totalTasksCompleted,
+			pendingTasks,
+			latestTasks,
 		});
 	} catch (error) {
-		console.error('Error getting visitor:', error);
+		console.error('Error getting dashboard:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -62,7 +61,7 @@ export const getTask = async (req, res) => {
 };
 export const createTask = async (req, res) => {
 	try {
-		const task = await Task.create({ ...req.body});
+		const task = await Task.create({ ...req.body });
 		res.status(200).json(task);
 	} catch (error) {
 		console.error('Error creating task:', error);
@@ -73,7 +72,10 @@ export const createTask = async (req, res) => {
 };
 export const updateTask = async (req, res) => {
 	try {
-		const task = await Task.findByIdAndUpdate({ _id: req.params.id }, {...req.body});
+		const task = await Task.findByIdAndUpdate(
+			{ _id: req.params.id },
+			{ ...req.body }
+		);
 		res.status(200).json(task);
 	} catch (error) {
 		console.error('Error updating task:', error);
@@ -98,8 +100,8 @@ export const getAttendance = async (req, res) => {
 export const markAttendance = async (req, res) => {
 	try {
 		const employee = await Employee.findOne({ userId: req.user._id });
-		if(!employee){
-			return res.status(400).json({ message: 'You are not an employee' })
+		if (!employee) {
+			return res.status(400).json({ message: 'You are not an employee' });
 		}
 		const attendance = await Attendance.create({
 			companyId: req.body.companyId,
@@ -122,12 +124,15 @@ export const checkOutAttendance = async (req, res) => {
 			createdAt: -1,
 		});
 		if (!isCheckedIn) {
-			return res.status(400).json({ message: 'You are not checked in' })
+			return res.status(400).json({ message: 'You are not checked in' });
 		}
-		const attendance = await Attendance.findOneAndUpdate({_id: isCheckedIn._id}, {
-			checkOut: Date.now(),
-			status: 'present',
-		});
+		const attendance = await Attendance.findOneAndUpdate(
+			{ _id: isCheckedIn._id },
+			{
+				checkOut: Date.now(),
+				status: 'present',
+			}
+		);
 		res.status(200).json(attendance);
 	} catch (error) {
 		console.error('Error checking out attendance:', error);
@@ -138,7 +143,7 @@ export const checkOutAttendance = async (req, res) => {
 };
 export const getMyLeaveRequest = async (req, res) => {
 	try {
-		const leaves = await Leave.find({ companyId: req.params.companyId });
+		const leaves = await Leave.find({ staffId: req.staff._id });
 		res.status(200).json(leaves);
 	} catch (error) {
 		console.error('Error getting leaves:', error);
@@ -149,10 +154,49 @@ export const getMyLeaveRequest = async (req, res) => {
 };
 export const sendLeaveRequest = async (req, res) => {
 	try {
-		const leave = await Leave.create(req.body);
+		const { startDate, days } = req.body;
+		const staff = req.staff;
+		if (!startDate || !days) {
+			return res
+				.status(400)
+				.json({ message: 'Start date and days are required' });
+		}
+		const endDate = new Date(startDate);
+		endDate.setDate(endDate.getDate() + days - 1); // Calculate end date based on start date and days
+		req.body.endDate = endDate;
+		const leave = await Leave.create({
+			...req.body,
+			staffId: staff._id,
+			companyId: staff.companyId,
+			status: 'pending',
+		});
 		res.status(200).json(leave);
 	} catch (error) {
 		console.error('Error sending leave request:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+
+export const updateLeaveRequest = async (req, res) => {
+	try {
+		const { startDate, days, leaveId } = req.body;
+		if (!startDate || !days) {
+			return res
+				.status(400)
+				.json({ message: 'Start date and days are required' });
+		}
+		const endDate = new Date(startDate);
+		endDate.setDate(endDate.getDate() + days - 1); // Calculate end date based on start date and days
+		req.body.endDate = endDate;
+		const leave = await Leave.findByIdAndUpdate(
+			{ _id: leaveId },
+			{ ...req.body }
+		);
+		res.status(200).json(leave);
+	} catch (error) {
+		console.error('Error updating leave request:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -227,7 +271,14 @@ export const getCustomers = async (req, res) => {
 };
 export const getTickets = async (req, res) => {
 	try {
-		const tickets = await Ticket.find({ companyId: req.params.companyId });
+		const staff = req.staff;
+		// console.log('Staff ID:', staff._id);
+		// Fetch tickets created by the staff or assigned to them
+		// const tickets = await Ticket.find();
+		const tickets = await Ticket.find({
+			$or: [{ createdBy: staff._id }, { assignedTo: { $in: [staff._id] } }],
+		});
+
 		res.status(200).json(tickets);
 	} catch (error) {
 		console.error('Error getting tickets:', error);
@@ -236,9 +287,16 @@ export const getTickets = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
+
 export const createTicket = async (req, res) => {
 	try {
-		const ticket = await Ticket.create(req.body);
+		const code = await generateUniqueCode(Ticket);
+		const ticket = await Ticket.create({
+			...req.body,
+			createdBy: req.staff._id,
+			code: code,
+			companyId: req.staff.companyId,
+		});
 		res.status(200).json(ticket);
 	} catch (error) {
 		console.error('Error getting ticket:', error);
@@ -249,7 +307,10 @@ export const createTicket = async (req, res) => {
 };
 export const updateTicket = async (req, res) => {
 	try {
-		const ticket = await Ticket.findByIdAndUpdate({ _id: req.params.id }, { ...req.body });
+		const ticket = await Ticket.findByIdAndUpdate(
+			{ _id: req.params.id },
+			{ ...req.body }
+		);
 		res.status(200).json(ticket);
 	} catch (error) {
 		console.error('Error updating ticket:', error);
@@ -260,7 +321,10 @@ export const updateTicket = async (req, res) => {
 };
 export const getTicket = async (req, res) => {
 	try {
-		const ticket = await Ticket.find({ _id: req.params.id });
+		const ticket = await Ticket.findOne({ _id: req.params.id });
+		if (!ticket) {
+			return res.status(404).json({ message: 'Ticket not found' });
+		}
 		res.status(200).json(ticket);
 	} catch (error) {
 		console.error('Error getting ticket:', error);
@@ -271,7 +335,9 @@ export const getTicket = async (req, res) => {
 };
 export const getComplaints = async (req, res) => {
 	try {
-		const complaints = await Complaint.find({ companyId: req.params.companyId });
+		const complaints = await Complaint.find({
+			companyId: req.params.companyId,
+		});
 		res.status(200).json(complaints);
 	} catch (error) {
 		console.error('Error getting complaints:', error);

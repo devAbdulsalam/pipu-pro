@@ -54,13 +54,31 @@ router.get(
 router.get('/roles/:id', requireAuth, verifyPermission(['COMPANY']), getRole);
 router.post('/roles', requireAuth, verifyPermission(['COMPANY']), addRole);
 router.patch('/roles', requireAuth, verifyPermission(['COMPANY']), updateRole);
-router.get('/staffs', requireAuth, verifyPermission(['COMPANY']), getStaffs);
+router.get(
+	'/staffs',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getStaffs
+);
 router.post('/staffs', requireAuth, verifyPermission(['COMPANY']), addStaff);
-router.get('/staffs/:id', requireAuth, verifyPermission(['COMPANY']), getStaff);
-router.get('/leaves', requireAuth, verifyPermission(['COMPANY']), getLeaves);
+router.get('/staffs/:id', requireAuth, verifyPermission(['COMPANY']),  getStaff);
+router.get(
+	'/leaves',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getLeaves
+);
 router.get('/leaves/:id', requireAuth, getLeavesRequest);
 router.get('/boardrooms', requireAuth, getBoardRooms);
-router.get('/tickets', requireAuth, getTickets);
+router.get(
+	'/tickets',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getTickets
+);
 router.get('/tickets/:id', requireAuth, getTicket);
 router.post('/tickets', requireAuth, createTicket);
 router.patch('/tickets', requireAuth, updateTicket);

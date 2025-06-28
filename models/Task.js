@@ -2,7 +2,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const taskSchema = new Schema({
-	ticket: {
+	ticketId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Ticket',
 		required: true,

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import User from '../models/User.js';
 import Company from '../models/Company.js';
 import Employee from '../models/Employee.js';
-import Visitor from '../models/Visitor.js';
+import Role from '../models/Role.js';
 
 dotenv.config();
 
@@ -91,4 +91,30 @@ export const isCompany = async (req, res, next) => {
 		console.log(error);
 		res.status(401).json({ error: 'Company Request is not authorized' });
 	}
+};
+export const isStaff = async (req, res, next) => {
+	try {
+		const staff = await Employee.findOne({ userId: req.user._id });
+		if (!staff) {
+			return res.status(401).json({ error: 'Invalid staff ' });
+		}
+		req.staff = staff;
+		next();
+	} catch (error) {
+		console.log(error);
+		res.status(401).json({ error: 'Staff Request is not authorized' });
+	}
+};
+export const checkPermission = (permissionName) => {
+	return async (req, res, next) => {
+		const user = req.user; // Assume user is attached to req after authentication
+		const roles = await Role.find({ _id: { $in: user.roleIds } });
+		const allowed = roles.some((role) =>
+			role.permissions.some((p) => p.name === permissionName && p.isAllowed)
+		);
+		if (!allowed) {
+			return res.status(403).json({ message: 'Forbidden' });
+		}
+		next();
+	};
 };

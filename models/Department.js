@@ -37,7 +37,7 @@ const DepartmentSchema = new Schema(
 			enum: ['onsite', 'hybrid', 'remote'],
 		},
 		workDays: {
-			type: String,
+			type: Number,
 		},
 	},
 	{ timestamps: true }
