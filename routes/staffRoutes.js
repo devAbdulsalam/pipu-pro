@@ -3,7 +3,7 @@ import {
 	getDashboard,
 	getAttendance,
 	markAttendance,
-	checkOutAttendance,
+	clockOutAttendance,
 	getMyLeaveRequest,
 	sendLeaveRequest,
 	updateLeaveRequest,
@@ -20,6 +20,7 @@ import {
 	getMeetings,
 	getComplaints,
 	getMyPayroll,
+	getMyPayrollHistory,
 } from '../controllers/staff.js';
 import {
 	requireAuth,
@@ -44,6 +45,13 @@ router.get(
 	getMyPayroll
 );
 router.get(
+	'/payroll-history',
+	requireAuth,
+	verifyPermission(['STAFF']),
+	isStaff,
+	getMyPayrollHistory
+);
+router.get(
 	'/attendance',
 	requireAuth,
 	verifyPermission(['STAFF']),
@@ -61,7 +69,7 @@ router.patch(
 	requireAuth,
 	verifyPermission(['STAFF']),
 	isStaff,
-	checkOutAttendance
+	clockOutAttendance
 );
 router.get(
 	'/leaves',

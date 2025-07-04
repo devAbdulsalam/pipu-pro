@@ -24,6 +24,7 @@ import companyRoutes from './routes/company/index.js';
 import staffRoutes from './routes/staffRoutes.js';
 import chatRoutes from './routes/chatRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';
+import contentRoutes from './routes/contentRoutes.js';
 import boardRoomRoutes from './routes/staffRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import generalRoutes from './routes/generalRoutes.js';
@@ -110,6 +111,7 @@ app.use('/api/v1/staff', staffRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/chats', chatRoutes);
 app.use('/api/v1/meetings', meetingRoutes);
+app.use('/api/v1/pages', contentRoutes);
 app.use('/api/v1/board-rooms', boardRoomRoutes);
 app.use('/api/v1/messages', messageRoutes);
 app.use('/api/v1', generalRoutes);
@@ -132,7 +134,6 @@ app.use(
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 	console.log(`Health check: http://localhost:${PORT}/api/health`);
-
 });
 
 // Graceful shutdown

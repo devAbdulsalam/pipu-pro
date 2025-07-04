@@ -95,7 +95,6 @@ export const getConflictTickets = async (req, res) => {
 
 export const addAdmin = async (req, res) => {
 	const session = await mongoose.startSession();
-
 	try {
 		const { name, email, position, password } = req.body;
 

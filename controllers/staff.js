@@ -9,9 +9,10 @@ import Leave from '../models/Leave.js';
 import Complaint from '../models/Complaint.js';
 import Customer from '../models/Customer.js';
 import Board from '../models/Board.js';
-import Chat from '../models/Chat.js';
+import Salary from '../models/Salary.js';
 import VisitorLog from '../models/VisitorLog.js';
 import { generateUniqueCode } from '../utils/generateUniqueCode.js';
+import Payroll from '../models/Payroll.js';
 
 export const getDashboard = async (req, res) => {
 	try {
@@ -99,15 +100,41 @@ export const getAttendance = async (req, res) => {
 };
 export const markAttendance = async (req, res) => {
 	try {
+		const {isGeoLocationEnabled, latitude, longitude} = req.body
 		const employee = await Employee.findOne({ userId: req.user._id });
 		if (!employee) {
 			return res.status(400).json({ message: 'You are not an employee' });
 		}
+		// Check if the employee is already clocked in
+		const alreadyClockedIn = await Attendance.findOne({
+			userId: req.user._id,
+			employeId: employee._id,
+			clockOut: { $exists: false }, // Check if clockOut is not set
+		});
+
+		if (alreadyClockedIn) {
+			return res.status(400).json({ message: 'You are already clocked in' });
+		}
+		// compare 700 meters with the employee's geolocation with google maps api		
+		// // Check if the employee is within the allowed geolocation range
+		// if (isGeoLocationEnabled) {
+		// 	const isWithinRange = await checkIfWithinRange(
+		// 		latitude,
+		// 		longitude,
+		// 		employee.latitude,
+		// 		employee.longitude
+		// 	);
+		// 	if (!isWithinRange) {
+		// 		return res
+		// 			.status(400)
+		// 			.json({ message: 'You are not within the allowed geolocation range' });
+		// 	}
+		// }
 		const attendance = await Attendance.create({
 			companyId: req.body.companyId,
 			userId: req.user._id,
 			employeId: employee._id,
-			checkIn: Date.now(),
+			clockIn: Date.now(),
 		});
 		res.status(200).json(attendance);
 	} catch (error) {
@@ -117,25 +144,30 @@ export const markAttendance = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
-export const checkOutAttendance = async (req, res) => {
+export const clockOutAttendance = async (req, res) => {
 	try {
-		const isCheckedIn = await Attendance.findOneAndUpdate({
+		const employee = await Employee.findOne({ userId: req.user._id });
+		if (!employee) {
+			return res.status(400).json({ message: 'You are not an employee' });
+		}
+		const isclockedIn = await Attendance.findOne({
 			userId: req.user._id,
-			createdAt: -1,
+			clockOut: { $exists: false },
 		});
-		if (!isCheckedIn) {
-			return res.status(400).json({ message: 'You are not checked in' });
+		if (!isclockedIn) {
+			return res.status(400).json({ message: 'You are not clocked in' });
 		}
 		const attendance = await Attendance.findOneAndUpdate(
-			{ _id: isCheckedIn._id },
+			{ _id: isclockedIn._id },
 			{
-				checkOut: Date.now(),
+				clockOut: Date.now(),
 				status: 'present',
-			}
+			},
+			{ new: true }
 		);
 		res.status(200).json(attendance);
 	} catch (error) {
-		console.error('Error checking out attendance:', error);
+		console.error('Error clocking out attendance:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });
@@ -227,10 +259,23 @@ export const getBoardRooms = async (req, res) => {
 };
 export const getMyPayroll = async (req, res) => {
 	try {
-		const visitors = await Visitor.find({ companyId: req.params.companyId });
-		res.status(200).json(visitors);
+		// const staff = req.staff;
+		const payroll = await Salary.find({ employeeId: req.staff._Id });
+		res.status(200).json(payroll);
 	} catch (error) {
-		console.error('Error getting visitors:', error);
+		console.error('Error getting payroll:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getMyPayrollHistory = async (req, res) => {
+	try {
+		const staff = req.staff;
+		const payroll = await Payroll.find({ employes: { $in: [staff._id] } });
+		res.status(200).json(payroll);
+	} catch (error) {
+		console.error('Error getting payroll history:', error);
 		return res
 			.status(500)
 			.json({ error: error.message || 'Internal server error' });

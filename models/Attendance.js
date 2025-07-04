@@ -5,8 +5,8 @@ const attendanceSchema = new Schema({
 	companyId: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
 	employeId: { type: Schema.Types.ObjectId, ref: 'Employee', required: true },
 	userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-	checkIn: { type: Date },
-	checkOut: { type: Date },
+	clockIn: { type: Date },
+	clockOut: { type: Date },
 	category: { type: String},
 	status: {
 		type: String,
