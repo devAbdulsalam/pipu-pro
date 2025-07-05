@@ -75,7 +75,7 @@ export const subscribe = async (req, res) => {
 			.json({ error: error.message || 'Internal server error' });
 	}
 };
-export const verifyPaystackPayment = async (id) => {
+export const verifyPaystackPayment2 = async (id) => {
 	try {
 		const response = await axios.get(
 			`https://api.paystack.co/transaction/verify/${id}`,
@@ -98,7 +98,6 @@ export const verifyPaystackPayment = async (id) => {
 		};
 	}
 };
-
 export const verifyPayment = async (req, res) => {
 	try {
 		const { planId, paymentId } = req.body;

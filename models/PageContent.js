@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 const PageContentSchema = new Schema(
 	{
-		name: { type: String, required: true },
+		name: { type: String, unique: true, required: true },
 		sections: [
 			{
 				sectionName: { type: String, required: true },
