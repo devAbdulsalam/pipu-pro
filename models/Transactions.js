@@ -2,9 +2,13 @@ import mongoose from 'mongoose';
 
 const transactionSchema = new mongoose.Schema(
 	{
-		user: {
+		userId: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
+			required: true,
+		},
+		refId: {
+			type: String,
 			required: true,
 		},
 		subscription: {
@@ -13,10 +17,14 @@ const transactionSchema = new mongoose.Schema(
 			required: true,
 		},
 		amount: Number,
-		date: Date,
 		receiptUrl: String,
+		status: {
+			type: String,
+			enum: ['pending', 'processing', 'paid'],
+			required: true,
+		},
+		resolvedAt: { type: Date },
 	},
-
 	{ timestamps: true }
 );
 

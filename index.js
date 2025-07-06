@@ -28,6 +28,8 @@ import contentRoutes from './routes/contentRoutes.js';
 import boardRoomRoutes from './routes/staffRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import generalRoutes from './routes/generalRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
+// import notificationRoutes from './routes/notificationRoutes.js';
 // import  './crons/index.js';
 
 // setups
@@ -114,7 +116,10 @@ app.use('/api/v1/meetings', meetingRoutes);
 app.use('/api/v1/pages', contentRoutes);
 app.use('/api/v1/board-rooms', boardRoomRoutes);
 app.use('/api/v1/messages', messageRoutes);
+app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1', generalRoutes);
+
+console.log(typeof require); // console.log("5" + 3 - 2); // This will log "53" because of string concatenation
 
 // Basic route
 // * API DOCS

@@ -6,10 +6,19 @@ import {
 	paystackWebhook,
 	verifyPayment,
 } from '../controllers/general.js';
+import {
+	getNotifications,
+	getNotification,
+	markAsRead,
+} from '../controllers/notification.js';
+
 import { requireAuth } from '../middleware/requireAuth.js';
 
 const router = express.Router();
 
+router.get('/notifications', requireAuth, getNotifications);
+router.get('/notifications/:id', requireAuth, getNotification);
+router.post('/notifications', requireAuth, markAsRead);
 router.get('/subscription-plans', getSubscriptionPlans);
 router.get('/subscriptions', requireAuth, getSubscription);
 router.post('/subscriptions', requireAuth, subscribe);

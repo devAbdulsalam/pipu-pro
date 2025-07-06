@@ -13,6 +13,27 @@ const salarySchema = new Schema(
 			ref: 'Company',
 			required: true,
 		},
+		amount: {
+			type: Number,
+			required: true,
+		},
+		basicSalary: {
+			type: Number,
+			required: true,
+		},
+		bonus: {
+			type: Number,
+			default: 0,			
+		},
+		deductions: {
+			type: Number,
+			default: 0,
+		},
+		tax: {
+			type: Number,
+			default: 0,			
+		},
+
 	},
 	{ timestamps: true }
 );

@@ -8,7 +8,7 @@ const PayrollSchema = new mongoose.Schema(
 		},
 		status: {
 			type: String,
-			enum: ['pending', 'paid'],
+			enum: ['pending', 'paid', 'draft'],
 			default: 'pending',
 		},
 		employes: [

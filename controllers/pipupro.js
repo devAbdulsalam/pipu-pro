@@ -5,13 +5,14 @@ import Role from '../models/Role.js';
 import Admin from '../models/Admin.js';
 // import Staff from '../models/Staff.js';
 // import Guest from '../models/Guest.js';
+import Payroll from '../models/Payroll.js';
 import Transaction from '../models/Transactions.js';
 import SubscriptionPlan from '../models/SubscriptionPlan.js';
 // import { generateUniqueCode } from '../utils/generateUniqueCode.js';
 
 export const getDashboard = async (req, res) => {
 	try {
-		const roleCondition = { role: { $ne: 'admin' } };
+		const roleCondition = { role: { $ne: 'ADMIN' } };
 		// Run counts in parallel for performance
 		const [totalUsers, activeUsers, recentUsers, activeSubscribers] =
 			await Promise.all([
@@ -40,7 +41,9 @@ export const getDashboard = async (req, res) => {
 
 export const getAccounts = async (req, res) => {
 	try {
-		const users = await User.find().sort({ createdAt: -1 }).select('-password');
+		const users = await User.find()
+			.sort({ role: 1, createdAt: -1 })
+			.select('-password');
 
 		res.status(200).json(users);
 	} catch (error) {
@@ -153,13 +156,19 @@ export const addAdmin = async (req, res) => {
 };
 export const getFinances = async (req, res) => {
 	try {
-		const [totalRevenue, pendingPayroll, transactions, activeSubscribers] =
-			await Promise.all([
-				Subscription.countDocuments({ status: 'active' }),
-				Subscription.countDocuments({ status: 'active' }),
+		const subs = await Subscription.find({
+			status: 'active',
+		}).populate('planId');
+		const totalRevenue = subs.reduce((sum, sub) => {
+			return sum + Number(sub.planId.price);
+		}, 0);
+		const [pendingPayroll, transactions, activeSubscribers] = await Promise.all(
+			[
+				Payroll.countDocuments({ status: { $ne: 'paid' } }),
 				Transaction.find().sort({ createdAt: -1 }),
 				Subscription.countDocuments({ status: 'active' }),
-			]);
+			]
+		);
 		res.status(200).json({
 			totalRevenue,
 			activeSubscribers,

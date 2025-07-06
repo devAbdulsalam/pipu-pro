@@ -1,4 +1,3 @@
-// models/Activity.ts
 import mongoose, { Schema } from 'mongoose';
 
 const PayslipSchema = new Schema(
