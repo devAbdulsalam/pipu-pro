@@ -17,6 +17,6 @@ const leaveSchema = new Schema({
 		reason: { type: String,  },
 	},
 });
-
+  
 const Leave = mongoose.model('Leave', leaveSchema);
 export default Leave;

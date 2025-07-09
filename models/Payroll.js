@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+
 const PayrollSchema = new mongoose.Schema(
 	{
 		companyId: {
@@ -6,26 +7,28 @@ const PayrollSchema = new mongoose.Schema(
 			ref: 'Company',
 			required: true,
 		},
+
 		status: {
 			type: String,
 			enum: ['pending', 'paid', 'draft'],
 			default: 'pending',
 		},
-		employes: [
+
+		approval: {
+			approvedBy: { type: Schema.Types.ObjectId, ref: 'Employee' },
+			reason: { type: String },
+			approvedAt: { type: Date },
+		},
+
+		employees: [
 			{
 				employeeId: {
 					type: mongoose.Schema.Types.ObjectId,
-					ref: 'User',
+					ref: 'Employee',
 					required: true,
 				},
-				amount: {
-					type: Number,
-					required: true,
-				},
-				dateProcessed: {
-					type: Date,
-					required: true,
-				},
+				amount: { type: Number, required: true },
+				dateProcessed: { type: Date, required: true },
 			},
 		],
 	},

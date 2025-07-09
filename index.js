@@ -119,7 +119,8 @@ app.use('/api/v1/messages', messageRoutes);
 app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1', generalRoutes);
 
-console.log(typeof require); // console.log("5" + 3 - 2); // This will log "53" because of string concatenation
+// console.log(typeof require); // 
+// console.log("5" + 3 - 2); // This will log "51" because of string concatenation
 
 // Basic route
 // * API DOCS
