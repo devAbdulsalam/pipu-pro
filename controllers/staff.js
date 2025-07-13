@@ -100,7 +100,7 @@ export const getAttendance = async (req, res) => {
 };
 export const markAttendance = async (req, res) => {
 	try {
-		const {isGeoLocationEnabled, latitude, longitude} = req.body
+		const { isGeoLocationEnabled, latitude, longitude } = req.body;
 		const employee = await Employee.findOne({ userId: req.user._id });
 		if (!employee) {
 			return res.status(400).json({ message: 'You are not an employee' });
@@ -115,7 +115,7 @@ export const markAttendance = async (req, res) => {
 		if (alreadyClockedIn) {
 			return res.status(400).json({ message: 'You are already clocked in' });
 		}
-		// compare 700 meters with the employee's geolocation with google maps api		
+		// compare 700 meters with the employee's geolocation with google maps api
 		// // Check if the employee is within the allowed geolocation range
 		// if (isGeoLocationEnabled) {
 		// 	const isWithinRange = await checkIfWithinRange(
@@ -258,6 +258,18 @@ export const getBoardRooms = async (req, res) => {
 	}
 };
 export const getMyPayroll = async (req, res) => {
+	try {
+		// const staff = req.staff;
+		const payroll = await Payroll.find({ employeeId: req.staff._Id });
+		res.status(200).json(payroll);
+	} catch (error) {
+		console.error('Error getting payroll:', error);
+		return res
+			.status(500)
+			.json({ error: error.message || 'Internal server error' });
+	}
+};
+export const getSalary = async (req, res) => {
 	try {
 		// const staff = req.staff;
 		const payroll = await Salary.find({ employeeId: req.staff._Id });

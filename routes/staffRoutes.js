@@ -21,6 +21,7 @@ import {
 	getComplaints,
 	getMyPayroll,
 	getMyPayrollHistory,
+	getSalary,
 } from '../controllers/staff.js';
 import {
 	requireAuth,
@@ -50,6 +51,13 @@ router.get(
 	verifyPermission(['STAFF']),
 	isStaff,
 	getMyPayrollHistory
+);
+router.get(
+	'/salary',
+	requireAuth,
+	verifyPermission(['STAFF']),
+	isStaff,
+	getSalary
 );
 router.get(
 	'/attendance',

@@ -1669,7 +1669,7 @@ paths:
   /users:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get users
       description: >-
         The API endpoint retrieves a list of users. When accessing this
@@ -3672,6 +3672,786 @@ paths:
             application/json:
               schema:
                 type: object
+    post:
+      tags:
+        - 🏫 Company
+      summary: Update company staff leave
+      description: >-
+        The API endpoint allows company to update staff leave.
+      operationId: updateStaffLeave
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                name:
+                  type: string
+                  example: john
+      responses:
+        '201':
+          description: Update staff leave
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Staff leave updated successfully.
+  /company/salary-structures:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company staff salary
+      description: >-
+        The API endpoint allows you to retrieve the company staff salary stuctures
+      operationId: getCompanyStaffSalaryStructures
+      responses:
+        '200':
+          description: Get company staff salary stuctures
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+        - 🏫 Company
+      summary: Update company staff salary stucture
+      description: >-
+        The API endpoint allows company to update staff salary stucture.
+      operationId: updateStaffSalaryStructure
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                name:
+                  type: string
+                  example: john
+      responses:
+        '201':
+          description: Update staff salary stucture
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Staff salary stucture updated successfully. 
+  /company/salary-structures/{stuctureId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company staff salary stucture
+      description: >-
+        The API endpoint allows you to retrieve the company staff salary stucture.
+      operationId: getCompanyStructure
+      parameters:
+        - name: stuctureId
+          in: path
+          required: true
+          description: The stucture id
+      responses:
+        '200':
+          description: Get company staff stucture
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /company/salary:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company staff salary
+      description: >-
+        The API endpoint allows you to retrieve the company staff salaries
+      operationId: getCompanyStaffSalaries
+      responses:
+        '200':
+          description: Get company staff salaries
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object 
+    post:
+      tags:
+        - 🏫 Company
+      summary: Update company staff leave
+      description: >-
+        The API endpoint allows company to update staff leave.
+      operationId: updateStaffLeave
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                name:
+                  type: string
+                  example: john
+      responses:
+        '201':
+          description: Update staff leave
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Staff leave updated successfully. 
+  /company/salary/{staffId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company staff leave
+      description: >-
+        The API endpoint allows you to retrieve the company staff leave requests
+      operationId: getCompanyLeaveRequests
+      parameters:
+        - name: staffId
+          in: path
+          required: true
+          description: The staff id
+      responses:
+        '200':
+          description: Get company staff leave
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+        - 🏫 Company
+      summary: Update company staff leave
+      description: >-
+        The API endpoint allows company to update staff leave.
+      operationId: updateStaffLeave
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                companyId:
+                  type: string
+                  example: 681e2429c5421ead94648571
+                name:
+                  type: string
+                  example: john
+      responses:
+        '201':
+          description: Update staff leave
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Staff leave updated successfully. 
+  /company/payrolls:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company payrolls
+      description: >-
+        The API endpoint allows you to retrieve the company staff payrolls
+      operationId: getCompanyStaffPayrolls
+      responses:
+        '200':
+          description: Get company staff payrolls
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+        - 🏫 Company
+      summary: Create new payroll
+      description: >-
+        The API endpoint allows company to create new payroll.
+      operationId: createNewPayroll
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: john
+                phone:
+                  type: string
+                  example: '+234568908798'
+                email:
+                  type: string
+                  example: abc@gmail.com
+                maxTime:
+                  type: number
+                  example: 200000000
+                entryType:
+                  type: string
+                  enum: ['infinity', 'single', 'multiple']
+                  example: infinity
+                  description: infinity, single, multiple
+                expirationTime:
+                  type: string
+                  example: '2025-07-28T06:42:26.247Z'
+                  description: '2025-06-30T06:42:26.247Z'
+      responses:
+        '201':
+          description: Payroll Created
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Payroll created successfully.
+  /company/payrolls/{staffId}:
+    get:
+      tags:
+        - 🏫 Company
+      summary: Get company staff payroll
+      description: >-
+        The API endpoint allows you to retrieve the company staff payroll
+      operationId: getCompanyStaffPayroll
+      parameters:
+        - name: staffId
+          in: path
+          required: true
+          description: The staff ID
+      responses:
+        '200':
+          description: Get company staff payroll
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
   /company/payroll-dashboard:
     get:
       tags:
@@ -3944,225 +4724,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-  /company/payrolls:
-    get:
-      tags:
-        - 🏫 Company
-      summary: Get company payrolls
-      description: >-
-        The API endpoint allows you to retrieve the company staff payrolls
-      operationId: getCompanyStaffPayrolls
-      responses:
-        '200':
-          description: Get company staff payrolls
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '443'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:47 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '493'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '631'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-    post:
-      tags:
-        - 🏫 Company
-      summary: Create new payroll
-      description: >-
-        The API endpoint allows company to create new payroll.
-      operationId: createNewPayroll
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: john
-                phone:
-                  type: string
-                  example: '+234568908798'
-                email:
-                  type: string
-                  example: abc@gmail.com
-                maxTime:
-                  type: number
-                  example: 200000000
-                entryType:
-                  type: string
-                  enum: ['infinity', 'single', 'multiple']
-                  example: infinity
-                  description: infinity, single, multiple
-                expirationTime:
-                  type: string
-                  example: '2025-07-28T06:42:26.247Z'
-                  description: '2025-06-30T06:42:26.247Z'
-      responses:
-        '201':
-          description: Payroll Created
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '500'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:09 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '495'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '772'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                  message:
-                    type: string
-                    example: >-
-                      Payroll created successfully.
-  /company/payrolls/{staffId}:
-    get:
-      tags:
-        - 🏫 Company
-      summary: Get company staff payroll
-      description: >-
-        The API endpoint allows you to retrieve the company staff payroll
-      operationId: getCompanyStaffPayroll
-      parameters:
-        - name: staffId
-          in: path
-          required: true
-          description: The staff ID
-      responses:
-        '200':
-          description: Get company staff payroll
-          headers:
-            Access-Control-Allow-Credentials:
-              schema:
-                type: string
-                example: 'true'
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: '*'
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-            Content-Length:
-              schema:
-                type: string
-                example: '443'
-            Date:
-              schema:
-                type: string
-                example: Fri, 30 Jun 2023 06:44:47 GMT
-            ETag:
-              schema:
-                type: string
-                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=5
-            RateLimit-Limit:
-              schema:
-                type: string
-                example: '500'
-            RateLimit-Remaining:
-              schema:
-                type: string
-                example: '493'
-            RateLimit-Reset:
-              schema:
-                type: string
-                example: '631'
-            X-Powered-By:
-              schema:
-                type: string
-                example: Express
-          content:
-            application/json:
-              schema:
-                type: object
+                type: object  
   /company/boardrooms:
     get:
       tags:
@@ -4767,6 +5329,66 @@ paths:
       responses:
         '200':
           description: Get staff payroll
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /staff/salary:
+    get:
+      tags:
+        - 👨‍👩‍👧‍👦 Staff
+      summary: Get staff current salary
+      description: >-
+        The API endpoint allows you to retrieve the staff current salary
+      operationId: getStaffCurrentSalary
+      responses:
+        '200':
+          description: Get staff current salary
           headers:
             Access-Control-Allow-Credentials:
               schema:
@@ -6861,7 +7483,7 @@ paths:
   /admin/admins:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get admins
       description: >-
         The API endpoint allows you to retrieve all admins
@@ -6921,7 +7543,7 @@ paths:
   /admin:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get dashboard
       description: >-
         The API endpoint allows you to retrieve the pipupro dashboard
@@ -6981,7 +7603,7 @@ paths:
   /admin/accounts:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get Accounts
       description: >-
         The API endpoint allows you to retrieve the pipupro users Accounts
@@ -7041,7 +7663,7 @@ paths:
   /admin/approvals:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get approvals
       description: >-
         The API endpoint allows you to retrieve all approved accounts
@@ -7101,7 +7723,7 @@ paths:
   /admin/finances:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get finances
       description: >-
         The API endpoint allows you to retrieve the pipupro admin finances
@@ -7161,7 +7783,7 @@ paths:
   /admin/conflicts:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get all reported conflicts
       description: >-
         The API endpoint allows you to retrieve all conflicts
@@ -7221,7 +7843,7 @@ paths:
   /admin/subscription-prices:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get subscription plan prices
       description: >-
         The API endpoint allows you to retrieve the pipupro admin to get subscription plan prices
@@ -7281,7 +7903,7 @@ paths:
   /admin/subscription-plans:
     post:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: create-subscription-plans
       description: >-
         The API endpoint allows admins to create subscription plans.
@@ -7410,7 +8032,7 @@ paths:
   /admin/update-subscription-prices:
     patch:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: update subscription plan prices
       description: >-
         The API endpoint allows admins to update subscription plan prices.
@@ -7494,7 +8116,7 @@ paths:
   /admin/subscriptions:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get subscriptions
       description: >-
         The API endpoint allows you to retrieve the pipupro admin to get subscriptions
@@ -7554,7 +8176,7 @@ paths:
   /admin/subscriptions/{subscriptionId}:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get subscriptionbyid
       description: >-
         The API endpoint allows you to retrieve the pipupro admin to get subscription by id
@@ -7619,7 +8241,7 @@ paths:
   /admin/roles:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get roles
       description: >-
         The API endpoint allows you to retrieve the roles
@@ -7678,7 +8300,7 @@ paths:
                 type: object
     post:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Add new role
       description: >-
         The API endpoint allows admin to add role.
@@ -7767,7 +8389,7 @@ paths:
                       Role added successfully.
     patch:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: update role
       description: >-
         The API endpoint allows  update role.
@@ -7860,7 +8482,7 @@ paths:
   /admin/roles/{roleId}:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get role by id
       description: >-
         The API endpoint allows you to retrieve the  role by id
@@ -7925,7 +8547,7 @@ paths:
   /pages/admin:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get page contents
       description: >-
         The API endpoint allows you to retrieve the page contents
@@ -7984,7 +8606,7 @@ paths:
                 type: object
     post:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Add new page contents
       description: >-
         The API endpoint allows admin to add page contents.
@@ -8013,7 +8635,7 @@ paths:
                           properties:
                             heading:
                               type: string
-                              example: Pipopro Admin page
+                              example: Pipu pro Admin page
                             subHeading:
                               type: string
                               example: manage llldjdkdkjjkd rofile
@@ -8084,7 +8706,7 @@ paths:
                       Page contents added successfully.
     patch:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: update page contents
       description: >-
         The API endpoint allows  update page contents.
@@ -8116,7 +8738,7 @@ paths:
                           properties:
                             heading:
                               type: string
-                              example: Pipopro Admin page
+                              example: Pipu pro Admin page
                             subHeading:
                               type: string
                               example: manage llldjdkdkjjkd rofile
@@ -8188,7 +8810,7 @@ paths:
   /pages/admin/{pageId}:
     get:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: Get page contents by id
       description: >-
         The API endpoint allows you to retrieve the  page contents by id
@@ -8252,7 +8874,7 @@ paths:
                 type: object
     patch:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: update page contents
       description: >-
         The API endpoint allows  update page contents.
@@ -8273,7 +8895,7 @@ paths:
                   example: '680523ae6e97ead69d461bb3'
                 heading:
                   type: string
-                  example: Pipopro Admin page
+                  example: Pipu pro Admin page
                 subHeading:
                   type: string
                   example: manage llldjdkdkjjkd rofile
@@ -8344,7 +8966,7 @@ paths:
                       Page contents updated successfully.
     delete:
       tags:
-        - 👨‍💼 Pipopro Admin
+        - 👨‍💼 Pipu pro Admin
       summary: delete page
       description: >-
         The API endpoint allows you to delete page.
@@ -10378,7 +11000,7 @@ tags:
   - name: 👩🏻‍🏫 Guest
     description: >-
       This section encompasses all other APIs related to guest.
-  - name: 👨‍💼 Pipopro Admin
+  - name: 👨‍💼 Pipu pro Admin
     description: >-
       This section encompasses all other APIs related to admin and app management.
   - name: 💸 Payment

@@ -18,10 +18,10 @@ export const getDashboard = async (req, res) => {
 		const company = req.company;
 		const [totalEmployee, newHires, attendanceRate, staffLog, subscription] =
 			await Promise.all([
-				Employee.countDocuments({ companyId: req.user._id }),
-				Employee.countDocuments({ companyId: req.user._id }),
+				Employee.countDocuments({ companyId: req.company._id }),
+				Employee.countDocuments({ companyId: req.company._id }),
 				Attendance.countDocuments({
-					companyId: req.user._id,
+					companyId: req.company._id,
 					status: 'active',
 				}),
 				Activity.find({ ownerId: req.user._id })
@@ -291,6 +291,7 @@ export const getStaffs = async (req, res) => {
 		if (!company) {
 			return res.status(404).json({ message: 'Company not found' });
 		}
+		// const staff = await Employee.find().populate('companyId');
 		const staff = await Employee.find({ companyId: company._id }).populate(
 			'userId'
 		);

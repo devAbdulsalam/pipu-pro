@@ -1,20 +1,126 @@
 import express from 'express';
 import {
-    payrollDashboard,
-    payrollHistory,
-    addPayroll,
-    getPayroll,
-    draftPayroll,
-    payrollDrafts,
+	payrollDashboard,
+	payrollHistory,
+	getSalaryStructure,
+	getSalaryStructures,
+	generateSalary,
+	paySalary,
+	updateSalary,
+	generatePayroll,
+	approvePayroll,
+	getPayroll,
+	getPayrolls,
+	draftPayroll,
+	payrollDrafts,
+	updateSalaryStructure,
 } from '../../controllers/company/payroll.js';
-import { requireAuth, verifyPermission } from '../../middleware/requireAuth.js';
+import {
+	requireAuth,
+	verifyPermission,
+	isCompany,
+} from '../../middleware/requireAuth.js';
 const router = express.Router();
-router.get('/payroll-dashboard', requireAuth, payrollDashboard);
-router.get('/payroll-history', requireAuth, payrollHistory);
-router.get('/payroll-drafts', requireAuth, payrollDrafts);
-router.post('/payroll-drafts', requireAuth, draftPayroll);
-router.get('/payrolls', requireAuth, payrollDashboard);
-router.post('/payrolls', requireAuth, addPayroll);
-router.get('/payrolls/:id', requireAuth, getPayroll);
+router.get(
+	'/salary-structures',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getSalaryStructures
+);
+router.post(
+	'/salary-structures',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	updateSalaryStructure
+);
+router.get(
+	'/salary-structures/:id',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getSalaryStructure
+);
+
+router.get(
+	'/salary',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	generateSalary
+);
+router.post(
+	'/salary',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	paySalary
+);
+router.patch(
+	'/salary',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	updateSalary
+);
+router.get(
+	'/payrolls',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getPayroll
+);
+router.post(
+	'/payrolls',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	generatePayroll
+);
+
+router.patch(
+	'/payrolls',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	approvePayroll
+);
+
+router.get(
+	'/payroll-dashboard',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	payrollDashboard
+);
+router.get(
+	'/payroll-history',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	payrollHistory
+);
+router.get(
+	'/payroll-drafts',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	payrollDrafts
+);
+router.post(
+	'/payroll-drafts',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	draftPayroll
+);
+router.get(
+	'/payrolls/:id',
+	requireAuth,
+	verifyPermission(['COMPANY']),
+	isCompany,
+	getPayrolls
+);
 
 export default router;
