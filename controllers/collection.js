@@ -160,6 +160,7 @@ export const getCollectionDashboard = async (req, res) => {
 			status: collection.status,
 			tenants: collection.tenants.map((tenant) => ({
 				name: tenant.tenantId?.name || 'Unknown',
+				email: tenant.tenantId?.email || 'Unknown',
 				apartmentUnit: tenant.apartmentUnit,
 				amountDue: tenant.amountDue,
 				status: tenant.status,

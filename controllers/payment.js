@@ -1,8 +1,10 @@
 // controllers/paymentController.js
 import Payment from '../models/Payment.js';
 import Collection from '../models/Collection.js';
-import Tenant from '../models/Tenant.js';
-import { processPayment } from '../utils/paymentProcessor.js';
+import {
+	processPayment,
+	verifyPaystackPayment,
+} from '../utils/paymentProcessor.js';
 import { sendReceipt } from '../utils/notificationService.js';
 
 export const handlePaymentWebhook = async (req, res) => {
@@ -69,11 +71,43 @@ export const getPaymentLink = async (req, res) => {
 				dueDate: collection.dueDate,
 				tenant: {
 					name: tenant.tenantId?.name,
+					email: tenant.tenantId?.email,
 					apartmentUnit: tenant.apartmentUnit,
 				},
 				paymentLink: tenant.paymentLink,
 			},
 		});
+	} catch (error) {
+		res.status(500).json({ success: false, message: error.message });
+	}
+};
+
+export const initializePayment = async (req, res) => {
+	try {
+		const paymentData = req.body;
+		const result = await processPayment(paymentData);
+		console.log('result', result);
+		if (result.success) {
+			res.status(200).json({ success: true, data: result });
+		} else {
+			res.status(400).json({ success: false, message: result.error });
+		}
+	} catch (error) {
+		console.error('Error in initializePayment:', error);
+		res.status(500).json({ success: false, message: error.message });
+	}
+};
+
+export const verifyPayment = async (req, res) => {
+	try {
+		const { reference } = req.body;
+		const payment = await verifyPaystackPayment(reference);
+
+		if (payment.success) {
+			res.status(200).json({ success: true, data: payment.data });
+		} else {
+			res.status(400).json({ success: false, message: payment.error });
+		}
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
 	}

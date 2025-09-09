@@ -22,7 +22,7 @@ export const initializePaystackPayment = async (
 				email,
 				amount: Math.round(amount * 100), // Convert to kobo
 				metadata,
-				callback_url: callbackUrl || `${BASE_URL}/payment/verify`,
+				callback_url: callbackUrl || `${BASE_URL}/payments/verify`,
 				channels: ['card', 'bank', 'ussd', 'qr', 'mobile_money'],
 			},
 			{
@@ -66,7 +66,7 @@ export const initializeFlutterwavePayment = async (
 				tx_ref: `PIPU-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
 				amount: amount,
 				currency: 'NGN',
-				redirect_url: redirectUrl || `${BASE_URL}/payment/verify`,
+				redirect_url: redirectUrl || `${BASE_URL}/payments/verify`,
 				customer: {
 					email: email,
 					phonenumber: metadata.phone || '',

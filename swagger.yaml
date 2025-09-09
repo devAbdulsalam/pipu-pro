@@ -9230,6 +9230,66 @@ paths:
                     type: string
                     example: >-
                       Subription created successfully.
+  /collections/dashboard:
+    get:
+      tags:
+        - 🔄 General
+      summary: Get collection dashboard
+      description: >-
+        The API endpoint allows you to retrieve collections dashboard.
+      operationId: getCollectionDashboard
+      responses:
+        '200':
+          description: Get all collection dashboard.
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
   /collections:
     get:
       tags:
@@ -9406,10 +9466,319 @@ paths:
                     type: string
                     example: >-
                       Collection created successfully.
+  /payments/{collectionCode}/{tenantCode}:
+    get:
+      tags:
+        - 💸 Payment
+      summary: Get rent payment link
+      description: >-
+        The API endpoint allows you to retrieve the rent payment link.
+      operationId: getPaymentLink
+      parameters:
+        - name: collectionCode
+          in: path
+          required: true
+          description: The collectionCode 
+        - name: tenantCode
+          in: path
+          required: true
+          description: The tenantCode 
+      responses:
+        '200':
+          description: Get rent payment link 
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '443'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:47 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1bb-YVaffq7t8o3of0yDl9g26tprr/8"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '493'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '631'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+  /payments/initialize:
+    post:
+      tags:
+        - 💸 Payment
+      summary: Initialize rent payment
+      description: >-
+        The API endpoint allows you to initialize rent payment
+      operationId: InitializeRentPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 680523ae6e97ead69d461bb3
+                amount:
+                  type: string
+                  example: 30000
+                gateway:
+                  type: string
+                  example: paystack
+      responses:
+        '201':
+          description: Subscribe to a plan
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Subription created successfully.
+  /payments/verify:
+    post:
+      tags:
+        - 💸 Payment
+      summary: Verify rent payment
+      description: >-
+        The API endpoint allows you to verify rent payment
+      operationId: VerifyRentPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                planId:
+                  type: string
+                  example: 680523ae6e97ead69d461bb3
+                paymentId:
+                  type: string
+                  example: 2ztvneaohdcccof
+      responses:
+        '201':
+          description: Verify rent payment
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Verify successfully.  
+  /payments/webhook:
+    post:
+      tags:
+        - 💸 Payment
+      summary: Rent payment webhook
+      description: >-
+        The API endpoint is for rent payment webhook
+      operationId: rentPaymentWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                planId:
+                  type: string
+                  example: 680523ae6e97ead69d461bb3
+                paymentId:
+                  type: string
+                  example: 2ztvneaohdcccof
+      responses:
+        '201':
+          description: Subscribe to a plan
+          headers:
+            Access-Control-Allow-Credentials:
+              schema:
+                type: string
+                example: 'true'
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '500'
+            Date:
+              schema:
+                type: string
+                example: Fri, 30 Jun 2023 06:44:09 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1f4-1q38Sbu25p0UVmeYQmrEv2VrgPg"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            RateLimit-Limit:
+              schema:
+                type: string
+                example: '500'
+            RateLimit-Remaining:
+              schema:
+                type: string
+                example: '495'
+            RateLimit-Reset:
+              schema:
+                type: string
+                example: '772'
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+                    example: >-
+                      Rent payment successfully.
   /verify-payment:
     post:
       tags:
-        - 🔄 General
+        - 💸 Payment
       summary: Verify Subscription payment
       description: >-
         The API endpoint allows you to verify subscription payment
@@ -9484,11 +9853,11 @@ paths:
                   message:
                     type: string
                     example: >-
-                      Subription created successfully.
+                      Subription created successfully. 
   /paystack-webhook:
     post:
       tags:
-        - 🔄 General
+        - 💸 Payment
       summary: Verify Subscription
       description: >-
         The API endpoint allows you to verify subscription
