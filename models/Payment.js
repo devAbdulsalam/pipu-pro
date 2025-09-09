@@ -1,24 +1,47 @@
+// models/Payment.js
 import mongoose from 'mongoose';
+
 const paymentSchema = new mongoose.Schema(
 	{
-		userId: {
+		collectionId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
+			ref: 'Collection',
 			required: true,
 		},
-		cardNumber: {
+		tenantId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Tenant',
+		},
+		phone: String,
+		email: String,
+		amount: {
+			type: Number,
+			required: true,
+		},
+		paymentMethod: {
 			type: String,
+			enum: ['card', 'bank_transfer', 'wallet'],
 			required: true,
 		},
-		expiryDate: {
+		status: {
 			type: String,
-			required: true,
+			enum: ['pending', 'success', 'failed', 'refunded'],
+			default: 'pending',
 		},
-		isDefault: Boolean,
+		transactionReference: {
+			type: String,
+			unique: true,
+		},
+		paymentGateway: {
+			type: String,
+			enum: ['paystack', 'flutterwave'],
+		},
+		receiptUrl: String,
+		metadata: mongoose.Schema.Types.Mixed,
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+	}
 );
 
-const Payment = mongoose.model('Payment', paymentSchema);
-
-export default Payment;
+export default mongoose.model('Payment', paymentSchema);
