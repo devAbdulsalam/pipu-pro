@@ -62,51 +62,86 @@ export const getPaymentLink = async (req, res) => {
 				.status(404)
 				.json({ success: false, message: 'Payment link not found' });
 		}
-
-		res.json({
-			success: true,
-			data: {
-				title: collection.title,
-				amount: tenant.amountDue,
-				dueDate: collection.dueDate,
-				tenant: {
-					name: tenant.tenantId?.name,
-					email: tenant.tenantId?.email,
-					apartmentUnit: tenant.apartmentUnit,
-				},
-				paymentLink: tenant.paymentLink,
-			},
-		});
-	} catch (error) {
-		res.status(500).json({ success: false, message: error.message });
-	}
-};
-
-export const initializePayment = async (req, res) => {
-	try {
-		const paymentData = req.body;
+		const paymentData = {
+			email: tenant.tenantId?.email,
+			amount: tenant.amountDue,
+		};
 		const result = await processPayment(paymentData);
 		console.log('result', result);
 		if (result.success) {
-			res.status(200).json({ success: true, data: result });
+			const payment = await Payment.create({
+				collectionId: collection._id,
+				amount: tenant.amountDue,
+				tenantId: tenant.tenantId?._id,
+				email: tenant.tenantId?.email,
+				phone: tenant.tenantId?.phone,
+				paymentGateway: result?.data?.gateway,
+			});
+			res.status(200).json({
+				success: true,
+				data: {
+					title: collection.title,
+					amount: tenant.amountDue,
+					dueDate: collection.dueDate,
+					tenant: {
+						name: tenant.tenantId?.name,
+						email: tenant.tenantId?.email,
+						apartmentUnit: tenant.apartmentUnit,
+					},
+					paymentUrl: result.paymentUrl,
+					reference: result.reference,
+					accessCode: result.access_code,
+					paymentId: payment._id,
+				},
+			});
 		} else {
 			res.status(400).json({ success: false, message: result.error });
 		}
 	} catch (error) {
-		console.error('Error in initializePayment:', error);
 		res.status(500).json({ success: false, message: error.message });
 	}
 };
 
 export const verifyPayment = async (req, res) => {
 	try {
-		const { reference } = req.body;
-		const payment = await verifyPaystackPayment(reference);
+		const { reference } = req.params;
+		const isPayment = await verifyPaystackPayment(reference);
 
-		if (payment.success) {
-			res.status(200).json({ success: true, data: payment.data });
+		console.log('payment', isPayment);
+
+		if (isPayment.success) {
+			const payment = await Payment.findOneAndUpdate(
+				{
+					transactionReference: isPayment.data.reference,
+				},
+				{
+					status: 'success',
+					receiptUrl: isPayment.data.receipt_url,
+				},
+				{ new: true }
+			);
+
+			if (payment) {
+				// Update collection totals
+				await Collection.findByIdAndUpdate(payment.collectionId, {
+					$inc: { totalReceived: payment.amount },
+				});
+
+				// Update tenant status
+				await Collection.updateOne(
+					{
+						_id: payment.collectionId,
+						'tenants.uniqueCode': payment.metadata?.uniqueCode,
+					},
+					{ $set: { 'tenants.$.status': 'paid' } }
+				);
+
+				// Send receipt
+				await sendReceipt(payment.phone, payment.email, payment);
+			}
+			res.status(200).json({ success: true, data: isPayment.data });
 		} else {
-			res.status(400).json({ success: false, message: payment.error });
+			res.status(400).json({ success: false, message: isPayment.error });
 		}
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
